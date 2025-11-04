@@ -10,16 +10,11 @@ html {
         "wdth" 100;
     color: #F5F5F5;
 }
-
-
-
-
 .header-container {
     width: 100%;
     border-bottom: 1px solid black;
     height: auto;
 }
-
 .pre-header {
     display: flex;
     justify-content: space-around;
@@ -28,14 +23,10 @@ html {
     box-sizing: border-box;
     gap: 10px;
 }
-
-
 .header-span {
     display: flex;
     align-items: center;
 }
-
-
 .search-input {
     border: none;
     width: 100%;
@@ -43,7 +34,6 @@ html {
     cursor: pointer;
 
 }
-
 .search-container {
     display: flex;
     flex: 1;
@@ -55,19 +45,14 @@ html {
     cursor: pointer;
 
 }
-
 .material-symbols-outlined {
     color: green;
 }
-
-
-
 .logos-container {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-
 .main-logo {
 
     width: 60px;
@@ -76,7 +61,6 @@ html {
 
 
 }
-
 .header-logos {
     padding: 6px;
 }
@@ -91,7 +75,6 @@ html {
 .header-logos i:hover {
     transform: scale(1.2);
 }
-
 .secondary-header {
     display: flex;
     align-items: stretch;
@@ -101,8 +84,6 @@ html {
     background: linear-gradient(to right, #e8f5e9, #81c784, #1b5e20);
     margin: 0;
 }
-
-
 .ul-nav-secondary-header {
     display: flex;
     align-items: stretch;
@@ -114,7 +95,6 @@ html {
     box-sizing: border-box;
     gap: 12px;
 }
-
 .ul-nav-secondary-header {
     list-style-type: none;
     margin: 0;
@@ -123,7 +103,6 @@ html {
 
 
 }
-
 .ul-nav-secondary-header,
 a {
     display: flex;
@@ -137,9 +116,7 @@ a {
     border-radius: 0;
     transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
 
-
 }
-
 .ul-nav-secondary-header li:first-child a {
     background-color: white;
     color: black;
@@ -148,9 +125,6 @@ a {
     height: 100%;
 
 }
-
-
-
 .ul-nav-secondary-header a:hover {
     color: black;
     border-radius: 20px;
@@ -162,18 +136,189 @@ a {
 
 
 }
-
 .ul-nav-secondary-header {
     gap: 12px;
 
 }
+
 .helpmega {
     margin-left: 6px;
     color: black;
     padding-top: 2px;
 }
+
 .megaproducts {
     margin-right: 6px;
     color: black;
     padding-top: 2px;
+}
+
+.phonesection {
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+}
+
+.scroll-btn-left {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    background-color: rgba(71, 135, 120, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.s ease, transform 0.2s ease;
+    z-index: 100;
+    /* asigură că stă peste conținut */
+
+
+
+}
+
+.scroll-btn-right {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    background-color: rgba(71, 135, 120, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 100;
+    /* asigură că stă peste conținut */
+}
+
+h1 {
+    margin: 0;
+    color: #585858;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.phonecardscontainer {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 80%;
+    margin: 0a auto;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 20px;
+
+}
+.phonecardscontainer::-webkit-scrollbar {
+    display: none; /* ascunde scrollbar-ul */
+}
+.phonecard {
+   min-width: 10%;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: left;
+    color: black;
+    height: max-content;
+    position: relative;
+    
+   
+}
+
+
+.phoneimage {
+
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;  
+}
+.about-phone{
+    background-color:#EF2100 ;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: smaller;
+   
+}
+
+.phoneprice {
+
+    font-size: 10px;
+    font-weight: bold;
+    object-fit: cover;
+    color: red;
+}
+
+.phonename {
+    font-size: 12px;
+    font-weight: bold;
+    object-fit: cover;
+
+
+}
+
+.buyphone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    
+}
+
+.buyphone button {
+    background-color: #478778;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.phonedescription {
+    background-color: #f0f0f0;
+    /* sau ce culoare vrei */
+    flex-wrap: wrap;
+    border-radius: 8px;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    font-size: 12px;
+}
+
+
+
+
+
+/* Ketu fillon stilimi per media queries */
+@media (max-width: 500px) {
+    .phonecard {
+        width: 80%;
+    }
+    .phonecardscontainer{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 15px;
+        overflow: hidden;
+        justify-content: space-around;
+    }
+    .scroll-button{
+        display: none;
+    }
 }
