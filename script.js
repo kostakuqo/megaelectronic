@@ -190,7 +190,61 @@ const phones = [
     },
 ]
 
-// ketu eshte kodi i funksionit qe ben te mundur gjenerimin e kartave te telefonave
+const contains = [
+    {
+        contain: "mobile phones",
+        image: "images/phone.products.jpg",
+        icon: "fa-solid fa-arrow-up-right-from-square",
+        text: "shiko produktet...."
+    },
+    {
+        contain: "covers",
+        image: "images/covers.webp",
+        icon: "fa-solid fa-arrow-up-right-from-square",
+        text: "shiko produktet...."
+    },
+    {
+        contain: "headphones",
+        image: "images/headphones.webp",
+        icon: "fa-solid fa-arrow-up-right-from-square",
+        text: "shiko produktet...."
+    },
+    {
+        contain: "speakers",
+        image: "images/speakers.jpg",
+        icon: "fa-solid fa-arrow-up-right-from-square",
+        text: "shiko produktet...."
+    },
+    {
+        contain: "scooters",
+        image: "images/scooters.webp",
+        icon: "fa-solid fa-arrow-up-right-from-square",
+        text: "shiko produktet...."
+    }
+    
+];
+
+
+function generateContent() {
+    const container = document.querySelector(".about-contain");
+    const templateContainer = document.querySelector(".main-container");
+
+    templateContainer.style.display = "none";
+    contains.forEach(contain => {
+        const newContain = templateContainer.cloneNode(true);
+
+        newContain.querySelector(".preview-contain").innerHTML = contain.contain;
+        console.log("imagine setata", contain.image);
+        newContain.querySelector(".image-contain").src = contain.image;
+        newContain.querySelector(".icon-contain").src = contain.icon;
+        newContain.querySelector(".tooltip-text").text = contain.text;
+
+        newContain.style.display = "block";
+        container.appendChild(newContain);
+
+    })
+}
+
 function generatePhoneCards() {
     const container = document.querySelector('.phonecardscontainer');
     const templateCard = container.querySelector('.phonecard'); // Cardul template
@@ -216,9 +270,13 @@ function generatePhoneCards() {
     });
 }
 
+
+
+//ketu mbaron funksioni qe ben te mundur gjnerimin e pembajtjes 
+
 // 3. Apelăm funcția pentru a genera cardurile la încărcarea paginii
 window.onload = function () {
-    generatePhoneCards();
+    generatePhoneCards(), generateContent();
 };
 // ketu mbaron kodi per krijimin e phone card
 

@@ -152,6 +152,82 @@ a {
     color: black;
     padding-top: 2px;
 }
+.about-contain{
+    display: flex;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    justify-content: center;
+   
+}
+.main-container {
+  position: relative; /* face ca elementele absolute din interior să fie raportate la container */
+  display: inline-block;
+  margin: 4px;
+  min-width: 200px;
+   /* ca iconul să nu iasă în afara imaginii */
+}
+.redirect-contain {
+  position: absolute;
+  bottom: 10px;  /* distanță față de marginea de sus a imaginii */
+  right: 10px; /* distanță față de marginea din dreapta a imaginii */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2; /* se asigură că stă peste imagine */
+}
+
+.redirect-contain:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+}
+
+/* tooltip-ul */
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 120%; /* îl mutăm sub imagine, deci sub icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 6px 10px;
+  border: 1px solid #236627 ;
+  border-radius: 15px;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* afișează tooltip-ul la hover */
+.redirect-contain:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.preview-contain{
+    position:absolute;
+    top: 10px;
+    left: 4px;
+     background: linear-gradient(to right,#265FCF, #22A7F0,#A9D9AC);
+    border-top-right-radius:15px ;
+    border-bottom-right-radius:15px ;
+    padding: 0px 10px 0px 10px;
+
+}
+.image-contain {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  margin: 4px;
+  min-width: 90px;
+}
 
 .phonesection {
     background-color: #F5F5F5;
@@ -225,7 +301,7 @@ h1 {
     display: none; /* ascunde scrollbar-ul */
 }
 .phonecard {
-   min-width: 10%;
+   min-width: 100px;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -237,8 +313,6 @@ h1 {
     
    
 }
-
-
 .phoneimage {
 
     width: 100%;
@@ -248,14 +322,13 @@ h1 {
 .about-phone{
     background-color:#EF2100 ;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 10px;
     border-radius: 5px;
     color: white;
     font-size: smaller;
    
 }
-
 .phoneprice {
 
     font-size: 10px;
@@ -263,7 +336,6 @@ h1 {
     object-fit: cover;
     color: red;
 }
-
 .phonename {
     font-size: 12px;
     font-weight: bold;
@@ -271,7 +343,6 @@ h1 {
 
 
 }
-
 .buyphone {
     display: flex;
     justify-content: space-between;
@@ -279,7 +350,6 @@ h1 {
     margin-top: 6px;
     
 }
-
 .buyphone button {
     background-color: #478778;
     color: white;
@@ -289,7 +359,6 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .phonedescription {
     background-color: #f0f0f0;
     /* sau ce culoare vrei */
@@ -301,11 +370,6 @@ h1 {
     color: black;
     font-size: 12px;
 }
-
-
-
-
-
 /* Ketu fillon stilimi per media queries */
 @media (max-width: 500px) {
     .phonecard {
@@ -317,6 +381,7 @@ h1 {
         gap: 15px;
         overflow: hidden;
         justify-content: space-around;
+        width: 100%;
     }
     .scroll-button{
         display: none;
