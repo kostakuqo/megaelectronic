@@ -12,6 +12,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script type="module" src="script.js" async></script>
 
 
 
@@ -34,9 +35,22 @@
 
             </div>
             <div class="logos-container">
-                <span class="header-logos"><i class="fas fa-user"></i></span>
-                <span class="header-logos"><i class="far fa-heart"></i></span>
-                <span class="header-logos"><i class="fas fa-shopping-cart"></i></span>
+                <span class="cart-icon">
+                    <span class="header-logos"><i class="fas fa-user"></i></span>
+                    <span class="tooltip-text-navbar">login</span>
+                </span>
+
+                <span class="cart-icon">
+                    <span class="header-logos"><i class="far fa-heart"></i></span>
+                    <span class="tooltip-text-navbar">My Favourites</span>
+                </span>
+
+
+                <span class="cart-icon">
+                    <span class="header-logos"><i class="fas fa-shopping-cart"></i></span>
+                    <span class="tooltip-text-navbar">Koshi im</span>
+                </span>
+
             </div>
         </div>
     </header>
@@ -45,13 +59,24 @@
     <!-- Ketu fillon headeri i dyte i nav bar -->
     <div class="secondary-header">
         <ul class="ul-nav-secondary-header">
-            <li><a href="#"><span class="megaproducts"><i class="fas fa-bars"></i></span>Produkte</a></li>
+            <li class="show-products-list">
+                <a href="#">
+                    <span class="megaproducts"><i class="fas fa-bars"></i></span>
+                    <span class="produkte">Produkte</span>
+                </a>
+                <ul class="products-list">
+                    <li><i class="fa-solid fa-mobile mobile-icon"></i>Telefona mobil</li>
+                    <li><i class="fa-solid fa-headphones mobile-icon"></i>headphones</li>
+                    <li><i class="fa-solid fa-charging-station mobile-icon"></i>chargers</li>
+                    <li><i class="fa-solid fa-volume-high mobile-icon"></i>speakers</li>
+                </ul>
+            </li>
             <li><a href="#">Oferta</a></li>
             <li><a href="#">Kontakto</a></li>
-
-            <li><a href="#">help <span class="helpmega"><i class="fas fa-headphones"></i></span></a></li>
+            <li><a href="#">Help <span class="helpmega"><i class="fas fa-headphones"></i></span></a></li>
         </ul>
     </div>
+
     <!-- Ketu mbaron headeri i dyte i nav bar -->
     <!-- ketu fillon afisimi permbajtjes se faqes -->
     <section class="contain">
@@ -69,6 +94,49 @@
         </div>
     </section>
 
+    <!-- dua te bej nje seksion ketu per te aafisuar video -->
+    <section class="dual-video-section">
+        <div class="video-box">
+            <video autoplay muted loop playsinline>
+                <source src="videos/oferta.mp4" type="video/mp4">
+            </video>
+            <div class="video-text">
+                <h3>Iphone 16 Pro Max</h3>
+                <span>Price</span>
+            </div>
+            <span class="day-offer">Oferta e dites</span>
+            <span class="akses-ofert">shiko oferten...</span>
+        </div>
+        <div class="video-box">
+            <video autoplay muted loop playsinline>
+                <source src="videos/oferta2.mp4" type="video/mp4">
+            </video>
+            <div class="video-text">
+                <h3>Iphone 16 Pro Max</h3>
+                <span>Price</span>
+            </div>
+            <span class="day-offer">Oferta e dites</span>
+            <span class="akses-ofert">shiko oferten...</span>
+
+        </div>
+        <div class="video-box">
+            <video autoplay muted loop playsinline>
+                <source src="videos/oferta 3.mp4" type="video/mp4">
+            </video>
+            <div class="video-text">
+                <h3>Iphone 16 Pro Max</h3>
+                <span>Price</span>
+            </div>
+            <span class="day-offer">Oferta e dites</span>
+            <span class="akses-ofert">shiko oferten...</span>
+        </div>
+    </section>
+
+
+
+    <!-- ketu mbaron afisimi i videos -->
+
+
 
 
 
@@ -80,15 +148,15 @@
 
 
         <div class="phonecardscontainer" id="phonecardscontainer">
-            <div class="phonecard">
-                <span class="about-phone">Super Cmim</span>
-                <img class="phoneimage" src="images/Apple-iPhone-16-Pro-hero-240909_inline.jpg.large.jpg" alt="Phone 1">
+            <div class="phonecard template">
+                <span class="about-phone"></span>
+                <img class="phoneimage" src="" alt="Phone 1">
                 <h3 class="phonename"></h3>
                 <div class="phonedescription">
                 </div>
                 <div class="buyphone">
                     <span class="phoneprice"></span>
-                    <button class="buyphone"><i class="fa-solid fa-cart-shopping"></i></button>
+                    <button class="buyphone-btn"><i class="fa-solid fa-cart-shopping"></i></button>
                 </div>
             </div>
 
@@ -96,8 +164,30 @@
 
         <button class="scroll-button scroll-btn-right">&#10095;</button>
     </section>
-    <script src="script.js"></script>
+
     <!-- ketu mbaron seksioni i telefonave -->
+
+
+
+    <!-- ketu eshte seksioni i koshit te blerjes -->
+
+    <section class="container content-section">
+        <h2 class="section-header">CART</h2>
+        <div class="cart-row">
+            <span class="cart-item cart-header cart-column">ITEM</span>
+            <span class="cart-price cart-header cart-column">PRICE</span>
+            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+        </div>
+        <div class="cart-items">
+
+        </div>
+        <div class="cart-total">
+            <strong class="cart-total-title">Total</strong>
+            <span class="cart-total-price">$0</span>
+        </div>
+        <button class="btn btn-primary btn-purchase" type="button">Send Order</button>
+    </section>
+    <!-- ketu mbaron seksioni i koshit te  blerjeve -->
 
 
 </body>

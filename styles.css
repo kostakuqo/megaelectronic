@@ -9,12 +9,15 @@ html {
     font-variation-settings:
         "wdth" 100;
     color: #F5F5F5;
+    overflow-x: hidden;
 }
+
 .header-container {
     width: 100%;
     border-bottom: 1px solid black;
     height: auto;
 }
+
 .pre-header {
     display: flex;
     justify-content: space-around;
@@ -23,10 +26,12 @@ html {
     box-sizing: border-box;
     gap: 10px;
 }
+
 .header-span {
     display: flex;
     align-items: center;
 }
+
 .search-input {
     border: none;
     width: 100%;
@@ -34,6 +39,7 @@ html {
     cursor: pointer;
 
 }
+
 .search-container {
     display: flex;
     flex: 1;
@@ -45,14 +51,17 @@ html {
     cursor: pointer;
 
 }
+
 .material-symbols-outlined {
     color: green;
 }
+
 .logos-container {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 .main-logo {
 
     width: 60px;
@@ -61,6 +70,7 @@ html {
 
 
 }
+
 .header-logos {
     padding: 6px;
 }
@@ -75,6 +85,55 @@ html {
 .header-logos i:hover {
     transform: scale(1.2);
 }
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Stilul pentru textul care apare la hover */
+.tooltip-text-navbar {
+    visibility: hidden;
+    opacity: 0;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px 16px;
+    position: absolute;
+    top: 125%;
+    /* apare deasupra iconiței */
+    left: 40%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    border: 1px solid green;
+}
+
+/* triunghi mic sub tooltip */
+/* .tooltip-text-navbar::after {
+    content: "";
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+} */
+
+/* când treci cu mouse-ul peste iconă */
+.cart-icon:hover .tooltip-text-navbar {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
 .secondary-header {
     display: flex;
     align-items: stretch;
@@ -84,6 +143,7 @@ html {
     background: linear-gradient(to right, #e8f5e9, #81c784, #1b5e20);
     margin: 0;
 }
+
 .ul-nav-secondary-header {
     display: flex;
     align-items: stretch;
@@ -95,6 +155,7 @@ html {
     box-sizing: border-box;
     gap: 12px;
 }
+
 .ul-nav-secondary-header {
     list-style-type: none;
     margin: 0;
@@ -103,6 +164,7 @@ html {
 
 
 }
+
 .ul-nav-secondary-header,
 a {
     display: flex;
@@ -117,14 +179,18 @@ a {
     transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
 
 }
+
 .ul-nav-secondary-header li:first-child a {
+    border-radius: none;
+    border: none;
     background-color: white;
     color: black;
     border-color: transparent;
-
     height: 100%;
+    margin-bottom: 0px;
 
 }
+
 .ul-nav-secondary-header a:hover {
     color: black;
     border-radius: 20px;
@@ -136,6 +202,7 @@ a {
 
 
 }
+
 .ul-nav-secondary-header {
     gap: 12px;
 
@@ -147,87 +214,259 @@ a {
     padding-top: 2px;
 }
 
+.show-products-list {
+    position: relative;
+}
+
+/* linkul principale */
+.show-products-list>a {
+
+    display: block;
+    /* face linkul un bloc complet */
+    background-color: white;
+    /* fundal alb continuu */
+    color: black;
+    text-decoration: none;
+    padding: 12px 20px;
+    /* ajustează după înălțimea navbar-ului */
+    border-radius: 0;
+    /* fără colțuri rotunjite */
+    height: 100%;
+    /* ocupă înălțimea containerului */
+    box-sizing: border-box;
+}
+
+/* Linkul principal “Produkte” */
+.show-products-list>a {
+    display: block;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 0;
+    /* fără rotunjire */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-bottom: none;
+    /* se lipește de dropdown */
+    position: relative;
+    z-index: 2;
+
+}
+
+.mobile-icon {
+    color: #22A7F0;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+/* Dropdown-ul */
+.products-list {
+    display: none;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    top: 100%;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: none;
+    /* să fie lipit de link */
+    border-radius: 0 0 6px 6px;
+    /* doar colțuri jos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    z-index: 999;
+}
+
+/* Afișare dropdown la hover */
+.show-products-list:hover .products-list {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+
+/* Hover pe link “Produkte” */
+.show-products-list:hover>a {
+    background-color: white;
+    /* aceeasi culoare ca dropdown */
+    border-radius: 0;
+    /* fara rotunjire */
+    border-bottom: none;
+}
+
+/* Elemente din listă */
+.products-list li {
+    padding: 14px;
+    cursor: pointer;
+    list-style: none;
+    width: 200px;
+}
+
+.products-list li:hover {
+    background-color: #e8f5e9;
+}
+
+/* Dezactivează hover global de la navbar care strica border-radius pe produse */
+.ul-nav-secondary-header a:hover {
+    transform: none !important;
+    border-radius: 0 !important;
+}
+
+
 .megaproducts {
     margin-right: 6px;
     color: black;
     padding-top: 2px;
 }
-.about-contain{
+
+
+
+.about-contain {
     display: flex;
+    width: 100%;
     padding-top: 6px;
     padding-bottom: 6px;
-    justify-content: center;
-   
+    justify-content: space-between;
+
 }
+
 .main-container {
-  position: relative; /* face ca elementele absolute din interior să fie raportate la container */
-  display: inline-block;
-  margin: 4px;
-  min-width: 200px;
-   /* ca iconul să nu iasă în afara imaginii */
+    position: relative;
+    /* face ca elementele absolute din interior să fie raportate la container */
+    display: inline-block;
+    margin: 4px;
+    min-width: 200px;
+    /* ca iconul să nu iasă în afara imaginii */
 }
+
 .redirect-contain {
-  position: absolute;
-  bottom: 10px;  /* distanță față de marginea de sus a imaginii */
-  right: 10px; /* distanță față de marginea din dreapta a imaginii */
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 2; /* se asigură că stă peste imagine */
+    position: absolute;
+    bottom: 10px;
+    /* distanță față de marginea de sus a imaginii */
+    right: 10px;
+    /* distanță față de marginea din dreapta a imaginii */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    /* se asigură că stă peste imagine */
 }
 
 .redirect-contain:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-  transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
 }
 
 /* tooltip-ul */
 .tooltip-text {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 120%; /* îl mutăm sub imagine, deci sub icon */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  color: black;
-  padding: 6px 10px;
-  border: 1px solid #236627 ;
-  border-radius: 15px;
-  font-size: 12px;
-  white-space: nowrap;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 5;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 120%;
+    /* îl mutăm sub imagine, deci sub icon */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: black;
+    padding: 6px 10px;
+    border: 1px solid #236627;
+    border-radius: 15px;
+    font-size: 12px;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
 }
 
 /* afișează tooltip-ul la hover */
 .redirect-contain:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
-.preview-contain{
-    position:absolute;
+.preview-contain {
+    position: absolute;
     top: 10px;
     left: 4px;
-     background: linear-gradient(to right,#265FCF, #22A7F0,#A9D9AC);
-    border-top-right-radius:15px ;
-    border-bottom-right-radius:15px ;
+    background: linear-gradient(to right, #265FCF, #22A7F0, #A9D9AC);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     padding: 0px 10px 0px 10px;
 
 }
+
 .image-contain {
-  display: block;
-  width: 100%;
-  height: 150px;
-  border-radius: 10px;
-  margin: 4px;
-  min-width: 90px;
+    display: block;
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    margin: 4px;
+    min-width: 90px;
 }
+
+.dual-video-section {
+    display: flex;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.video-box {
+    position: relative;
+    overflow: hidden;
+    margin: 6px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.video-box video {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.day-offer {
+    padding: 10px;
+    background-color: #81c784;
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.akses-ofert {
+    position: absolute;
+    bottom: 5px;
+    left: 35%;
+    background-color: #22A7F0;
+    padding: 4px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.video-text {
+    position: absolute;
+    top: 80%;
+    left: 200px;
+    transform: translate(-50%, -50%);
+    /* centrează textul */
+    text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    /* opțional – fundal semi-transparent */
+    border-radius: 10px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 6px;
+    min-width: fit-content;
+}
+
+
 
 .phonesection {
     background-color: #F5F5F5;
@@ -286,22 +525,28 @@ h1 {
 }
 
 .phonecardscontainer {
-    position: relative;
     display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    width: 80%;
-    margin: 0a auto;
-    justify-content: flex-start;
+    overflow-x: hidden;
+    /* ascunde scroll */
+    width: 100vw;
+    /* ocupă tot viewport-ul */
+    max-width: 100%;
+    /* previne depășirea */
     gap: 20px;
-    padding: 20px;
+    /* mai mic */
+    padding: 10px;
+    /* mai mic */
+    box-sizing: border-box;
+    margin: 0;
+}
 
-}
 .phonecardscontainer::-webkit-scrollbar {
-    display: none; /* ascunde scrollbar-ul */
+    display: none;
+    /* ascunde scrollbar-ul */
 }
+
 .phonecard {
-   min-width: 100px;
+    min-width: 100px;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -310,25 +555,28 @@ h1 {
     color: black;
     height: max-content;
     position: relative;
-    
-   
+
+
 }
+
 .phoneimage {
 
     width: 100%;
     border-radius: 10px;
-    object-fit: cover;  
+    object-fit: cover;
 }
-.about-phone{
-    background-color:#EF2100 ;
+
+.about-phone {
+    background-color: #EF2100;
     position: absolute;
     top: 45%;
     left: 10px;
     border-radius: 5px;
     color: white;
     font-size: smaller;
-   
+
 }
+
 .phoneprice {
 
     font-size: 10px;
@@ -336,6 +584,7 @@ h1 {
     object-fit: cover;
     color: red;
 }
+
 .phonename {
     font-size: 12px;
     font-weight: bold;
@@ -343,13 +592,15 @@ h1 {
 
 
 }
+
 .buyphone {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 6px;
-    
+
 }
+
 .buyphone button {
     background-color: #478778;
     color: white;
@@ -359,6 +610,7 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .phonedescription {
     background-color: #f0f0f0;
     /* sau ce culoare vrei */
@@ -370,20 +622,261 @@ h1 {
     color: black;
     font-size: 12px;
 }
+
+.cart-container {
+    background-color: #E8E8E8;
+    color: black;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 200px;
+    flex-direction: column;
+}
+
+.cart-container-items {
+    display: flex;
+    border-bottom: 1px solid black;
+    width: fit-content;
+    align-content: center;
+    align-self: center;
+}
+
+.image-item {
+    width: 90px;
+    height: 90px;
+}
+
+.item-container {
+    width: 100%;
+    display: flex;
+}
+
+.name-item {
+    margin-top: 45px;
+    margin-left: 10px;
+}
+
+.header-item {
+    border-bottom: 1px solid black
+}
+
+.price-item {
+    margin-top: 25px;
+    padding-top: 100px;
+    padding: 20px;
+}
+
+.input-value-item {
+    width: 50px;
+    padding: 6px;
+    margin-right: 50px;
+    border: 1px solid green;
+    border-radius: 12px;
+
+    color: black;
+}
+
+.remove-button {
+    padding: 6px;
+    background-color: #EF2100;
+    border: none;
+    border-radius: 12px;
+    color: #e8f5e9;
+    cursor: pointer;
+}
+
+.item {
+    margin-right: 20px;
+}
+
+.item:last-child {
+    margin-right: 0px;
+}
+
+.input-value {
+    margin-top: 20px;
+    padding-top: 20px;
+
+}
+
+.total-cart {
+    width: fit-content;
+    /* doar cât textul */
+    align-self: center;
+    /* împinge la dreapta */
+    margin-top: 15px;
+    margin-left: 28%;
+    /* controlează distanța față de marginea dreaptă */
+    font-size: 18px;
+    font-weight: bold;
+    color: #1b5e20;
+
+
+}
+
+.send-order {
+    width: fit-content;
+    /* doar cât textul */
+    align-self: center;
+    /* împinge la dreapta */
+    font-size: 18px;
+    font-weight: bold;
+    color: #1b5e20;
+
+}
+
+.section-header {
+    color: black;
+}
+
+.send-order-button {
+    padding: 10px 20px;
+    background-color: #22A7F0;
+    color: #e8f5e9;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.cart-header {
+    font-weight: bold;
+    font-size: 1.25em;
+    color: #333;
+}
+
+.cart-column {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+    margin-right: 1.5em;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+.cart-row {
+    display: flex;
+}
+
+.cart-item {
+    width: 45%;
+}
+
+.cart-price {
+    width: 20%;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.cart-quantity {
+    width: 35%;
+}
+
+.cart-item-title {
+    color: #333;
+    margin-left: .5em;
+    font-size: 1.2em;
+}
+
+.cart-item-image {
+    width: 75px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.btn-danger {
+    color: white;
+    background-color: #EB5757;
+    border: none;
+    border-radius: .3em;
+    font-weight: bold;
+    padding: 9px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #CC4C4C;
+}
+
+.cart-quantity-input {
+    height: 34px;
+    width: 50px;
+    border-radius: 5px;
+    border: 1px solid #56CCF2;
+    background-color: #eee;
+    color: #333;
+    padding: 0;
+    text-align: center;
+    font-size: 1.2em;
+    margin-right: 25px;
+}
+
+.cart-row:last-child {
+    border-bottom: 1px solid black;
+}
+
+.cart-row:last-child .cart-column {
+    border: none;
+}
+
+.cart-total {
+    text-align: end;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.cart-total-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: black;
+    margin-right: 20px;
+}
+
+.cart-total-price {
+    color: #333;
+    font-size: 1.1em;
+}
+
+.btn-purchase {
+    display: block;
+    margin: 40px auto 80px auto;
+    font-size: 1.75em;
+    background-color: #22A7F0;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+}
+
+.section-header {
+    display: flex;
+    justify-content: center;
+}
+
+
 /* Ketu fillon stilimi per media queries */
 @media (max-width: 500px) {
     .phonecard {
         width: 80%;
     }
-    .phonecardscontainer{
+
+    .phonecardscontainer {
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         overflow: hidden;
         justify-content: space-around;
         width: 100%;
     }
-    .scroll-button{
+
+    .scroll-button {
         display: none;
     }
+
+    .dual-video-section {
+        display: grid;
+        justify-content: space-around;
+    }
+
+    .produkte {
+        display: none;
+    }
+
 }
