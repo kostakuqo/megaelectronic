@@ -1,21 +1,29 @@
 async function loadData() {
     try {
-        const phonesResponse = await fetch('phones.json');
-        const containsResponse = await fetch('contains.json');
-
+        const [phonesResponse, containsResponse] = await Promise.all([
+            fetch('phones.json'),
+            fetch('contains.json')
+        ]);
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
 
         generatePhoneCards(phones);
         generateContent(contains);
-        ready(); // atașează evenimentele după ce elementele au fost create
 
-        // initializează scroll-ul după generarea cardurilor
+        // atașează evenimente după ce elementele au fost create
+        ready();
+
         scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+        initMap();
+
     } catch (error) {
-        console.error('Eroare la încărcarea datelor:', error);
+        console.error(error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', loadData);
+
+
 document.querySelector(".fa-shopping-cart").addEventListener('click', () => (
     window.location.href = 'cart.html'
 ));
@@ -28,8 +36,24 @@ document.querySelector(".fa-user").addEventListener('click', () => (
 
 
 
+function initMap(){
+    var map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13); // București
 
-// Folosește window.onload pentru a apela loadData
+// Adaugă layer-ul OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Adaugă un marker
+L.marker([41.32832421751286, 19.814152215343267])
+    .addTo(map)
+    .bindPopup('Megaelectronic')
+    .openPopup();
+
+};
+
+
 window.onload = loadData;
 
 if (document.readyState == 'loading') {
@@ -87,18 +111,33 @@ function quantityChanget(event) {
 }
 
 function addToCartClicked(event) {
-    // găsește cel mai apropiat buton .buyphone-btn (poate fi click pe <i>)
-    const button = event.target.closest('.buyphone-btn');
-    if (!button) return; // dacă s-a dat click în altă parte, ieși
 
-    // găsește cel mai apropiat card
+    const button = event.target.closest('.buyphone-btn');
+    if (!button) return;
+
+
     const shopItem = button.closest('.phonecard');
     if (!shopItem) return;
 
-    // extrage informațiile
+
     const title = shopItem.querySelector('.phonename')?.innerText || "Titlu lipsă";
     const price = shopItem.querySelector('.phoneprice')?.innerText || "Preț lipsă";
     const imageSrc = shopItem.querySelector('.phoneimage')?.src || "";
+
+
+    const product = { title, price, imageSrc, quantity: 1 };
+    console.log("PRODUKTI ESHTE", product);
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existing = cart.find(p => p.title === title);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`${title} u shtua ne koshin tend te blerjeve!`);
 
     console.log(title, price, imageSrc);
     addItemToCard(title, price, imageSrc);
@@ -127,14 +166,6 @@ function addItemToCard(title, price, imageSrc) {
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanget);
 
 }
-
-
-
-
-
-
-
-
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0];
     var cartRows = cartItemContainer.getElementsByClassName("cart-row")
@@ -152,21 +183,12 @@ function updateCartTotal() {
 }
 
 updateCartTotal();
-
-
-
 const showProductsList = document.querySelector(".show-products-list");
 const hidenList = document.querySelector(".products-list");
 
 showProductsList.addEventListener("click", function () {
     hidenList.style.display = hidenList.style.display === "none" ? "flex" : "none";
 })
-
-
-
-
-
-
 
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
