@@ -69,6 +69,14 @@ function renderCart() {
     updateCartTotal();
 
 }
+const cartIcon = document.querySelector(".fa-shopping-cart");
+if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
+
+const heartIcon = document.querySelector(".fa-heart");
+if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
+
+const userIcon = document.querySelector(".fa-user");
+if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
 
 function purchaseClicked() {
     alert('Faleminderit për porosinë tuaj ❤️');

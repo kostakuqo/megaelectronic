@@ -7,13 +7,14 @@ async function loadData() {
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
 
-        generatePhoneCards(phones);
-        generateContent(contains);
+        generatePhoneCards(phones);      // clonează cardurile
+        generateContent(contains);       // generează conținutul
 
-        // atașează evenimente după ce elementele au fost create
-        ready();
+        ready();                        // atașează evenimente
 
+        // Acum cardurile sunt în DOM => scroll-ul poate fi inițializat
         scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+
         initMap();
 
     } catch (error) {
@@ -21,35 +22,54 @@ async function loadData() {
     }
 }
 
+
 document.addEventListener('DOMContentLoaded', loadData);
 
 
-document.querySelector(".fa-shopping-cart").addEventListener('click', () => (
-    window.location.href = 'cart.html'
-));
-document.querySelector(".fa-heart").addEventListener('click', () => (
-    window.location.href = 'favorites.html'
-));
-document.querySelector(".fa-user").addEventListener('click', () => (
-    window.location.href = 'login.html'
-));
+document.addEventListener('DOMContentLoaded', () => {
+    const cartIcon = document.querySelector(".fa-shopping-cart");
+    if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
+
+    const heartIcon = document.querySelector(".fa-heart");
+    if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
+
+    const userIcon = document.querySelector(".fa-user");
+    if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
+});
+
+
+function showPhonesonly() {
+    let allSections = document.querySelectorAll('section');
+    let phonesSection = document.querySelector('.phonesection');
+    let footerSection = document.querySelector('.footer-section');
+
+    allSections.forEach(section => {
+        section.style.display = section === phonesSection ? "block" : "none";
+    });
+    if (footerSection) {
+        footerSection.style.display = "block";
+    }
+}
 
 
 
-function initMap(){
+
+
+
+function initMap() {
     var map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13); // București
 
-// Adaugă layer-ul OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+    // Adaugă layer-ul OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-// Adaugă un marker
-L.marker([41.32832421751286, 19.814152215343267])
-    .addTo(map)
-    .bindPopup('Megaelectronic')
-    .openPopup();
+    // Adaugă un marker
+    L.marker([41.32832421751286, 19.814152215343267])
+        .addTo(map)
+        .bindPopup('Megaelectronic')
+        .openPopup();
 
 };
 
@@ -215,7 +235,6 @@ function generatePhoneCards(phones) {
     templateCard.style.display = 'none';
 
     phones.forEach(phone => {
-
         const newCard = templateCard.cloneNode(true);
         newCard.querySelector('.phoneimage').src = phone.Image;
         newCard.querySelector('.phonename').textContent = phone.name;
@@ -223,8 +242,30 @@ function generatePhoneCards(phones) {
         newCard.querySelector('.phonedescription').textContent = phone.description;
         newCard.style.display = 'block';
         container.appendChild(newCard);
+
+        // Atașează evenimentul add to cart pentru fiecare card clonat
+        const addToCartBtn = newCard.querySelector('.buyphone-btn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', addToCartClicked);
+        }
+
+        // Atașează tooltip pentru fiecare card clonat
+        const tooltipBtn = newCard.querySelector('.text-btn'); // butonul care declanșează tooltip-ul
+        const tooltipText = newCard.querySelector('.tooltip-text'); // elementul tooltip
+        if (tooltipBtn && tooltipText) {
+            tooltipBtn.addEventListener('mouseenter', () => {
+                tooltipText.style.display = 'block';
+            });
+            tooltipBtn.addEventListener('mouseleave', () => {
+                tooltipText.style.display = 'none';
+            });
+        }
     });
+
+    // Apelăm scrollPhones după ce toate cardurile sunt în DOM
+    scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
 }
+
 
 
 
@@ -282,5 +323,5 @@ function scrollPhones(containerSelector, btnLeftSelector, btnRightSelector, scro
 
     updateButtons
 }
-scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+// scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
 
