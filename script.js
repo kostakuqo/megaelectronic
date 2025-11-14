@@ -7,15 +7,22 @@ async function loadData() {
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
 
-        generatePhoneCards(phones);      // clonează cardurile
-        generateContent(contains);       // generează conținutul
+        generatePhoneCards(phones);
+        generateContent(contains);
 
-        ready();                        // atașează evenimente
-
-        // Acum cardurile sunt în DOM => scroll-ul poate fi inițializat
+        ready();
         scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
-
         initMap();
+
+        // Atașăm listener-ele aici, după ce iconițele sunt în DOM
+        const cartIcon = document.querySelector(".fa-shopping-cart");
+        if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
+
+        const heartIcon = document.querySelector(".fa-heart");
+        if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
+
+        const userIcon = document.querySelector(".fa-user");
+        if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
 
     } catch (error) {
         console.error(error);
@@ -26,16 +33,7 @@ async function loadData() {
 document.addEventListener('DOMContentLoaded', loadData);
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const cartIcon = document.querySelector(".fa-shopping-cart");
-    if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
 
-    const heartIcon = document.querySelector(".fa-heart");
-    if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
-
-    const userIcon = document.querySelector(".fa-user");
-    if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
-});
 
 
 function showPhonesonly() {
