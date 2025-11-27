@@ -283,28 +283,13 @@ function scrollPhones(containerSelector, btnLeftSelector, btnRightSelector, scro
 
     const cards = container.querySelectorAll('.phonecard');
 
-    // Funksioni qe face zoom la scroll
-    // function scaleCards() {
-    //     const containerCenter = container.offsetWidth / 2;
-
-    //     cards.forEach(card => {
-    //         const cardRect = card.getBoundingClientRect();
-    //         const cardCenter = cardRect.left + cardRect.width / 2 - container.getBoundingClientRect().left;
-
-    //         const distance = Math.abs(containerCenter - cardCenter);
-    //         const maxDistance = container.offsetWidth / 2;
-
-    //         // scale intre 0.8 si 1.2
-    //         const scale = 1.2 - (distance / maxDistance) * 0.8;
-    //         card.style.transform = `scale(${Math.max(scale, 0.6)})`;
-    //     });
-    // }
+  
 
 
     function updateButtons() {
         btnLeft.disabled = container.scrollLeft === 0;
         btnRight.disabled = container.scrollLeft + container.clientWidth >= container.scrollWidth;
-        // scaleCards();
+        
     }
 
     btnLeft.addEventListener('click', () => {
@@ -323,5 +308,5 @@ function scrollPhones(containerSelector, btnLeftSelector, btnRightSelector, scro
 
     updateButtons
 }
-// scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+
 
