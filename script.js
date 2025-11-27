@@ -1,3 +1,6 @@
+// ===========================================
+// LOAD DATA + INIT
+// ===========================================
 async function loadData() {
     try {
         const [phonesResponse, containsResponse] = await Promise.all([
@@ -7,25 +10,82 @@ async function loadData() {
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
 
-        generatePhoneCards(phones);      // clonează cardurile
-        generateContent(contains);       // generează conținutul
+        generatePhoneCards(phones);
+        generateContent(contains);
+        ready(); // atașează evenimente
 
-        ready();                        // atașează evenimente
-
-        // Acum cardurile sunt în DOM => scroll-ul poate fi inițializat
+        // scroll carduri
         scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
 
+        // init map
         initMap();
+
+        // init carousel
+        initCarousel('.right-menu .carousel', 3000);
 
     } catch (error) {
         console.error(error);
     }
 }
 
+window.addEventListener('load', loadData);
 
-document.addEventListener('DOMContentLoaded', loadData);
+// ===========================================
+// CAROUSEL
+// ===========================================
+function initCarousel(carouselSelector, interval = 3000) {
+    const carousel = document.querySelector(carouselSelector);
+    if (!carousel) return;
+
+    const images = carousel.querySelectorAll('img.carousel-image');
+    const dotsContainer = carousel.querySelector('.carousel-dots');
+    let currentIndex = 0;
+
+    // creează dot-uri
+    const dots = [];
+    images.forEach((img, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentIndex = i;
+            showImage(currentIndex);
+        });
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
+    });
+
+    function showImage(index) {
+        images.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+            dots[i].classList.toggle('active', i === index);
+        });
+    }
+
+    // autoplay
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }, interval);
+
+    // butoane prev/next
+    const btnPrev = carousel.querySelector('.prev');
+    const btnNext = carousel.querySelector('.next');
+
+    if (btnPrev) btnPrev.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+    });
+    if (btnNext) btnNext.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    });
+}
 
 
+// ===========================================
+// CART ICONS
+// ===========================================
 document.addEventListener('DOMContentLoaded', () => {
     const cartIcon = document.querySelector(".fa-shopping-cart");
     if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
@@ -37,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
 });
 
-
+// ===========================================
+// SHOW ONLY PHONES SECTION
+// ===========================================
 function showPhonesonly() {
     let allSections = document.querySelectorAll('section');
     let phonesSection = document.querySelector('.phonesection');
@@ -46,187 +108,141 @@ function showPhonesonly() {
     allSections.forEach(section => {
         section.style.display = section === phonesSection ? "block" : "none";
     });
-    if (footerSection) {
-        footerSection.style.display = "block";
-    }
+    if (footerSection) footerSection.style.display = "block";
 }
 
-
-
-
-
-
+// ===========================================
+// LEAFLET MAP
+// ===========================================
 function initMap() {
-    var map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13); // București
-
-    // Adaugă layer-ul OpenStreetMap
+    var map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Adaugă un marker
     L.marker([41.32832421751286, 19.814152215343267])
         .addTo(map)
         .bindPopup('Megaelectronic')
         .openPopup();
-
-};
-
-
-window.onload = loadData;
-
-if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', ready)
-} else {
-    ready();
 }
 
+// ===========================================
+// CART FUNCTIONS
+// ===========================================
 function ready() {
-    var removeCartButtons = document.getElementsByClassName("btn-danger");
-    for (var i = 0; i < removeCartButtons.length; i++) {
-        var button = removeCartButtons[i];
-        button.addEventListener('click', removeCartItem)
-    }
+    const removeCartButtons = document.getElementsByClassName("btn-danger");
+    for (let button of removeCartButtons) button.addEventListener('click', removeCartItem);
 
-    var quantityInputs = document.getElementsByClassName('cart-quantity-input');
-    for (var i = 0; i < quantityInputs.length; i++) {
-        var input = quantityInputs[i];
-        input.addEventListener('change', quantityChanget);
+    const quantityInputs = document.getElementsByClassName('cart-quantity-input');
+    for (let input of quantityInputs) input.addEventListener('change', quantityChanget);
 
-    }
-    var addToCartButtons = document.getElementsByClassName('buyphone-btn');
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i];
-        button.addEventListener('click', addToCartClicked)
+    const addToCartButtons = document.getElementsByClassName('buyphone-btn');
+    for (let button of addToCartButtons) button.addEventListener('click', addToCartClicked);
 
-    }
-    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
-
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked);
 }
 
 function purchaseClicked() {
-    alert('Fleminderit per porosine tuaj');
-    var cartItems = document.getElementsByClassName('cart-items')[0];
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
-    }
+    alert('Faleminderit per porosine tuaj!');
+    const cartItems = document.getElementsByClassName('cart-items')[0];
+    while (cartItems.firstChild) cartItems.removeChild(cartItems.firstChild);
     updateCartTotal();
-
 }
 
 function removeCartItem(event) {
-    var buttonClicked = event.target;
-    buttonClicked.parentElement.parentElement.remove()
+    const buttonClicked = event.target;
+    buttonClicked.closest('.cart-row').remove();
     updateCartTotal();
-
 }
 
 function quantityChanget(event) {
-    var input = event.target;
-    if (isNaN(input.value) || input.value <= 0) {
-        input.value = 1
-    }
+    const input = event.target;
+    if (isNaN(input.value) || input.value <= 0) input.value = 1;
     updateCartTotal();
 }
 
 function addToCartClicked(event) {
-
     const button = event.target.closest('.buyphone-btn');
     if (!button) return;
-
 
     const shopItem = button.closest('.phonecard');
     if (!shopItem) return;
 
-
-    const title = shopItem.querySelector('.phonename')?.innerText || "Titlu lipsă";
-    const price = shopItem.querySelector('.phoneprice')?.innerText || "Preț lipsă";
+    const title = shopItem.querySelector('.phonename')?.innerText || "Titlu lipsë";
+    const price = shopItem.querySelector('.phoneprice')?.innerText || "0";
     const imageSrc = shopItem.querySelector('.phoneimage')?.src || "";
 
-
     const product = { title, price, imageSrc, quantity: 1 };
-    console.log("PRODUKTI ESHTE", product);
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existing = cart.find(p => p.title === title);
-    if (existing) {
-        existing.quantity += 1;
-    } else {
-        cart.push(product);
-    }
+    if (existing) existing.quantity += 1;
+    else cart.push(product);
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${title} u shtua ne koshin tend te blerjeve!`);
+    alert(`${title} u shtua ne koshin!`);
 
-    console.log(title, price, imageSrc);
     addItemToCard(title, price, imageSrc);
     updateCartTotal();
 }
 
 function addItemToCard(title, price, imageSrc) {
-    var cartRow = document.createElement('div');
+    const cartItems = document.getElementsByClassName('cart-items')[0];
+    const cartRow = document.createElement('div');
     cartRow.classList.add('cart-row');
 
-    var cartItems = document.getElementsByClassName('cart-items')[0];
-    var cartRowContents = `
-     <div class="cart-item cart-column">
-        <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
-        <span class="cart-item-title">${title}</span>
+    cartRow.innerHTML = `
+        <div class="cart-item cart-column">
+            <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+            <span class="cart-item-title">${title}</span>
         </div>
         <span class="cart-price cart-column">${price}</span>
         <div class="cart-quantity cart-column">
             <input class="cart-quantity-input" type="number" value="1">
             <button class="btn btn-danger" type="button">Remove</button>
-        </div>`
+        </div>
+    `;
 
-    cartRow.innerHTML = cartRowContents;
-    cartItems.append(cartRow)
-    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
-    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanget);
+    cartItems.appendChild(cartRow);
 
+    cartRow.querySelector('.btn-danger').addEventListener('click', removeCartItem);
+    cartRow.querySelector('.cart-quantity-input').addEventListener('change', quantityChanget);
 }
+
 function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0];
-    var cartRows = cartItemContainer.getElementsByClassName("cart-row")
-    var total = 0;
-    for (var i = 0; i < cartRows.length; i++) {
-        var cartRow = cartRows[i];
-        var priceElement = cartRow.getElementsByClassName('cart-price')[0];
-        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0];
-        var price = parseFloat(priceElement.innerText.replace("$", ''));
-        var quantity = quantityElement.value
-        total = total + (price * quantity);
+    const cartItemContainer = document.getElementsByClassName('cart-items')[0];
+    const cartRows = cartItemContainer.getElementsByClassName("cart-row");
+    let total = 0;
+
+    for (let cartRow of cartRows) {
+        const priceElement = cartRow.querySelector('.cart-price');
+        const quantityElement = cartRow.querySelector('.cart-quantity-input');
+        const price = parseFloat(priceElement.innerText.replace("$", ''));
+        const quantity = quantityElement.value;
+        total += price * quantity;
     }
     total = Math.round(total * 100) / 100;
-    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total;
+    document.querySelector('.cart-total-price').innerText = '$' + total;
 }
 
-updateCartTotal();
-const showProductsList = document.querySelector(".show-products-list");
-const hidenList = document.querySelector(".products-list");
-
-showProductsList.addEventListener("click", function () {
-    hidenList.style.display = hidenList.style.display === "none" ? "flex" : "none";
-})
-
+// ===========================================
+// GENERATE CONTENT & PHONE CARDS
+// ===========================================
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
     const templateContainer = document.querySelector(".main-container");
-
     templateContainer.style.display = "none";
+
     contains.forEach(contain => {
         const newContain = templateContainer.cloneNode(true);
-
         newContain.querySelector(".preview-contain").innerHTML = contain.contain;
         newContain.querySelector(".image-contain").src = contain.image;
         newContain.querySelector(".icon-contain").src = contain.icon;
         newContain.querySelector(".tooltip-text").text = contain.text;
-
         newContain.style.display = "block";
         container.appendChild(newContain);
-
-    })
+    });
 }
 
 function generatePhoneCards(phones) {
@@ -243,70 +259,38 @@ function generatePhoneCards(phones) {
         newCard.style.display = 'block';
         container.appendChild(newCard);
 
-        // Atașează evenimentul add to cart pentru fiecare card clonat
         const addToCartBtn = newCard.querySelector('.buyphone-btn');
-        if (addToCartBtn) {
-            addToCartBtn.addEventListener('click', addToCartClicked);
-        }
-
-        // Atașează tooltip pentru fiecare card clonat
-        const tooltipBtn = newCard.querySelector('.text-btn'); // butonul care declanșează tooltip-ul
-        const tooltipText = newCard.querySelector('.tooltip-text'); // elementul tooltip
-        if (tooltipBtn && tooltipText) {
-            tooltipBtn.addEventListener('mouseenter', () => {
-                tooltipText.style.display = 'block';
-            });
-            tooltipBtn.addEventListener('mouseleave', () => {
-                tooltipText.style.display = 'none';
-            });
-        }
+        if (addToCartBtn) addToCartBtn.addEventListener('click', addToCartClicked);
     });
 
-    // Apelăm scrollPhones după ce toate cardurile sunt în DOM
     scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
 }
 
-
-
-
+// ===========================================
+// SCROLL PHONES
+// ===========================================
 function scrollPhones(containerSelector, btnLeftSelector, btnRightSelector, scrollAmount = 1000) {
-    const container = document.querySelector(".phonecardscontainer");
-    const btnLeft = document.querySelector(".scroll-btn-left");
-    const btnRight = document.querySelector(".scroll-btn-right");
+    const container = document.querySelector(containerSelector);
+    const btnLeft = document.querySelector(btnLeftSelector);
+    const btnRight = document.querySelector(btnRightSelector);
 
-    if (!container || !btnLeft || !btnRight) {
-        console.error('Elementele nu au fost găsite! Verifică selectorii.');
-        return;
-    }
-
-
-
-    const cards = container.querySelectorAll('.phonecard');
-
-  
-
+    if (!container || !btnLeft || !btnRight) return;
 
     function updateButtons() {
         btnLeft.disabled = container.scrollLeft === 0;
         btnRight.disabled = container.scrollLeft + container.clientWidth >= container.scrollWidth;
-        
     }
 
     btnLeft.addEventListener('click', () => {
         container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-
         setTimeout(updateButtons, 300);
     });
 
     btnRight.addEventListener('click', () => {
         container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-
         setTimeout(updateButtons, 300);
     });
-    container
-        .addEventListener('scroll', updateButtons);
 
-    updateButtons
+    container.addEventListener('scroll', updateButtons);
+    updateButtons();
 }
-
-
