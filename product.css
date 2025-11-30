@@ -1,0 +1,166 @@
+.product-detail {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.product-second-display {
+    padding-right: 20px;
+    width: 30%;
+    /* Div evidențiat permanent */
+
+    /* fundal gri deschis */
+    border-radius: 12px;
+    /* colțuri rotunjite */
+    padding: 20px;
+    /* spațiu interior */
+
+    /* centrare pe pagină */
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        /* umbră subtilă */
+        0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+
+
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-product-image {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f8f8f8;
+}
+
+.thumbs-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    /* ascunde scrollbar-ul */
+}
+
+.thumb-image {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.thumb-image:hover,
+.thumb-image.active {
+    border-color: rgb(0, 200, 120);
+    transform: scale(1.05);
+}
+
+.thumbs-container::-webkit-scrollbar {
+    display: none;
+}
+
+#add-to-cart-btn {
+    display: flex;
+    align-items: stretch;
+    /* icon + text la înălțime completă */
+    border: none;
+    border-radius: 10px;
+    /* border-radius pe întreg butonul */
+    overflow: hidden;
+    /* ca icon-ul să nu depășească colțurile */
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    font-size: 16px;
+    background: linear-gradient(to right, #FF1D25, #2D5ACC, #2D5ACC, #2D5ACC, #2D5ACC, #2D5ACC, #0182E6);
+    margin-bottom: 6px;
+
+
+}
+
+#add-to-favourites-btn {
+    display: flex;
+    align-items: stretch;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #0A79E0;
+    font-size: 20px;
+
+
+}
+
+#add-to-favourites-btn .cart-icon {
+    padding: 10px;
+    display: flex;
+    align-items: stretch;
+    font-size: 20px;
+    color: #0A79E0;
+}
+
+
+#add-to-cart-btn .cart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF1D25;
+    /* roșu */
+    padding: 15px;
+    /* spațiu lateral doar în interiorul icon-ului */
+    flex-shrink: 0;
+    border-bottom-right-radius: 12px;
+    /* să nu se micșoreze */
+}
+
+#add-to-cart-btn .cart-text {
+    flex-grow: 1;
+    /* ocupă restul butonului */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text centrat pe verticală și orizontală */
+    color: white;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+
+
+}
+
+#add-to-favourites-btn .cart-text {
+    flex-grow: 1;
+    /* ocupă restul butonului */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text centrat pe verticală și orizontală */
+    color: #0A79E0;
+    font-size: 15px;
+
+
+}
+@media(max-width:500px){
+    .product-detail{
+        display: block;
+    }
+    .product-second-display{
+        width: 90%;
+    }
+    .main-product-image{
+        height: 200px;
+        width: 200px;
+        align-self: flex-start;
+    }
+
+}

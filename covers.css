@@ -1,0 +1,184 @@
+.coversection {
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+}
+
+.cover-scroll-btn-left {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    background-color: rgba(71, 135, 120, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.s ease, transform 0.2s ease;
+    z-index: 100;
+
+
+
+}
+
+.cover-scroll-btn-right {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    background-color: rgba(71, 135, 120, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 100;
+}
+
+h1 {
+    margin: 0;
+    color: #585858;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.covercardscontainer {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100vw;
+    max-width: 100%;
+    gap: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.tooltip-text-btn {
+    z-index: 1000;
+
+}
+
+
+.covercardscontainer::-webkit-scrollbar {
+    display: none;
+}
+
+.covercard {
+    overflow: visible;
+
+    height: 100px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: left;
+    color: black;
+    height: max-content;
+    position: relative;
+}
+
+.coverimage {
+
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.about-cover {
+    background-color: #EF2100;
+    position: absolute;
+    top: 45%;
+    left: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: smaller;
+
+}
+
+.coverprice {
+
+    font-size: 10px;
+    font-weight: bold;
+    object-fit: cover;
+    color: red;
+}
+
+.covername {
+    font-size: 12px;
+    font-weight: bold;
+    object-fit: cover;
+
+
+}
+
+.buycover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    overflow: visible;
+
+}
+
+.buycover button {
+    background-color: #478778;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buycover-btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.buycover-btn .tooltip-text-btn {
+    visibility: hidden;
+    width: 160px;
+    border: 1px solid green;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 15px;
+    padding: 5px;
+    position: absolute;
+    bottom: 12%;
+    right: -60px;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.buycover-btn:hover .tooltip-text-btn {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.coverdescription {
+    background-color: #f0f0f0;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    font-size: 12px;
+}

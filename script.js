@@ -3,17 +3,24 @@
 // ===========================================
 async function loadData() {
     try {
-        const [phonesResponse, containsResponse, headphonesResponse,speakersResponse] = await Promise.all([
+        const [phonesResponse, containsResponse, headphonesResponse, speakersResponse, coversResponse, chargersResponse, scootersResponse] = await Promise.all([
             fetch('data/phones.json'),
             fetch('data/contains.json'),
             fetch('data/headphones.json'),
-            fetch('data/speakers.json')
+            fetch('data/speakers.json'),
+            fetch('data/covers.json'),
+            fetch('data/chargers.json'),
+            fetch('data/scooters.json')
+
         ]);
 
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
         const headphones = await headphonesResponse.json();
-        const speakers = await speakersResponse.json()
+        const speakers = await speakersResponse.json();
+        const covers = await coversResponse.json();
+        const chargers = await chargersResponse.json();
+        const scooters = await scootersResponse.json();
 
         // GENERATE PHONES
         generateProductCards({
@@ -39,7 +46,7 @@ async function loadData() {
         });
         scrollProducts('.headphonecardscontainer', '#headphone-left', '#headphone-right', 300);
 
-         generateProductCards({
+        generateProductCards({
             products: speakers,
             containerSelector: '.speakercardscontainer',
             cardSelector: '.speakercard',
@@ -49,10 +56,42 @@ async function loadData() {
             descClass: '.speakerdescription'
         });
         scrollProducts('.speakercardscontainer', '#speaker-left', '#speaker-right', 300);
+        generateProductCards({
+            products: covers,
+            containerSelector: '.covercardscontainer',
+            cardSelector: '.covercard',
+            imageClass: '.coverimage',
+            nameClass: '.covername',
+            priceClass: '.coverprice',
+            descClass: '.coverdescription'
+        });
+        scrollProducts('.covercardscontainer', '#cover-left', '#cover-right', 300);
+        generateProductCards({
+            products: chargers,
+            containerSelector: '.chargercardscontainer',
+            cardSelector: '.chargercard',
+            imageClass: '.chargerimage',
+            nameClass: '.chargername',
+            priceClass: '.chargerprice',
+            descClass: '.chargerdescription'
+        });
+        scrollProducts('.chargercardscontainer', '#charger-left', '#charger-right', 300);
+        generateProductCards({
+            products: scooters,
+            containerSelector: '.scootercardscontainer',
+            cardSelector: '.scootercard',
+            imageClass: '.scooterimage',
+            nameClass: '.scootername',
+            priceClass: '.scooterprice',
+            descClass: '.scooterdescription'
+        });
+        scrollProducts('.scootercardscontainer', '#scooter-left', '#scooter-right', 300);
+
 
 
         // GENERATE CONTENT
         generateContent(contains);
+        attachHeaderIcons();
 
         // ATTACH CART EVENTS
         ready();
@@ -65,6 +104,16 @@ async function loadData() {
 
     } catch (error) {
         console.error(error);
+    }
+    function attachHeaderIcons() {
+        const cartIcon = document.querySelector(".fa-shopping-cart");
+        if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
+
+        const heartIcon = document.querySelector(".fa-heart");
+        if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
+
+        const userIcon = document.querySelector(".fa-user");
+        if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
     }
 }
 
@@ -122,16 +171,7 @@ function initCarousel(carouselSelector, interval = 3000) {
 // ===========================================
 // CART ICONS
 // ===========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const cartIcon = document.querySelector(".fa-shopping-cart");
-    if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
 
-    const heartIcon = document.querySelector(".fa-heart");
-    if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
-
-    const userIcon = document.querySelector(".fa-user");
-    if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
-});
 
 // ===========================================
 // SHOW ONLY PHONES SECTION
@@ -198,28 +238,35 @@ function quantityChanget(event) {
     updateCartTotal();
 }
 
-function addToCartClicked(event) {
-    const button = event.target.closest('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn');
-    if (!button) return;
+function addToCartClicked(input) {
+    let product;
+    // Dacă input este un Event
+    if (input instanceof Event) {
+        const button = input.target.closest('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn,.buycover-btn,.buycharger-btn,.buyscooter-btn');
+        if (!button) return;
 
-    const shopItem = button.closest('.phonecard, .headphonecard,.speakercard');
-    if (!shopItem) return;
+        const shopItem = button.closest('.phonecard, .headphonecard,.speakercard,.covercard,.chargercard,.scootercard');
+        if (!shopItem) return;
 
-    const title = shopItem.querySelector('.phonename, .headphonename,.speakername')?.innerText || "Titlu lipsë";
-    const price = shopItem.querySelector('.phoneprice, .headphoneprice,.speakerprice')?.innerText || "0";
-    const imageSrc = shopItem.querySelector('.phoneimage, .headphoneimage,speakerimage')?.src || "";
+        const title = shopItem.querySelector('.phonename, .headphonename,.speakername,.covername,.chargername,.scootername')?.innerText || "Titlu lipsă";
+        const price = shopItem.querySelector('.phoneprice, .headphoneprice,.speakerprice,.coverprice,.chargerprice,.scooterprice')?.innerText || "0";
+        const imageSrc = shopItem.querySelector('.phoneimage, .headphoneimage,speakerimage,.coverimage,.chargerimage,.scooterimage')?.src || "";
 
-    const product = { title, price, imageSrc, quantity: 1 };
+        product = { title, price, imageSrc, quantity: 1 };
+    } else {
+        // Dacă input este un obiect produs
+        product = { title: input.name || input.title, price: input.price, imageSrc: input.image || input.imageSrc, quantity: 1 };
+    }
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existing = cart.find(p => p.title === title);
+    const existing = cart.find(p => p.title === product.title);
     if (existing) existing.quantity += 1;
     else cart.push(product);
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${title} u shtua ne koshin!`);
+    alert(`${product.title} u shtua în coș!`);
 
-    addItemToCard(title, price, imageSrc);
+    addItemToCard(product.title, product.price, product.imageSrc);
     updateCartTotal();
 }
 
@@ -292,8 +339,11 @@ function generateProductCards({ products, containerSelector, cardSelector, image
     products.forEach(product => {
         const newCard = templateCard.cloneNode(true);
 
+        // Populăm datele produsului
         const img = newCard.querySelector(imageClass);
-        if (img) img.src = product.image;
+        if (img) {
+            img.src = product.images?.[0] || product.image || "";
+        }
 
         const name = newCard.querySelector(nameClass);
         if (name) name.textContent = product.name;
@@ -307,11 +357,23 @@ function generateProductCards({ products, containerSelector, cardSelector, image
         newCard.style.display = 'block';
         container.appendChild(newCard);
 
-        const addToCartBtn = newCard.querySelector('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn');
-        if (addToCartBtn) addToCartBtn.addEventListener('click', addToCartClicked);
+        // Butonul Add to Cart
+        const addToCartBtn = newCard.querySelector('.buyphone-btn, .buyheadphone-btn, .buyspeaker-btn, .buycover-btn, .buycharger-btn, .buyscooter-btn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // să nu deschidă pagina de detalii
+                addToCartClicked(product); // funcția ta existentă
+            });
+        }
 
+        // Click pe card pentru a deschide pagina de detalii
+        newCard.addEventListener('click', () => {
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = 'product.html';
+        });
     });
 }
+
 
 // ===========================================
 // SCROLL PRODUCTS
