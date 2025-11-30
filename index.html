@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="headphones.css">
+    <link rel="stylesheet" href="speakers.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
@@ -156,26 +158,10 @@
 
     </section>
 
-    <!-- 
-    ketu fillon seksioni i videos -->
-
-
-    <!-- ketu mbaron seksioni i videos -->
-
-
-    <!-- dua te bej nje seksion ketu per te aafisuar video -->
-
-    <!-- ketu mbaron afisimi i videos -->
-
-
-
-
-
-    <!-- ketu mbaron afisimi permbajtjes se faqes -->
     <!-- ketu fillon seksioni i telefonave -->
     <h1>Telefonat mobile</h1>
     <section class="phonesection">
-        <button class="scroll-button scroll-btn-left">&#10094;</button>
+        <button class="scroll-button scroll-btn-left" id="phone-left">&#10094;</button>
 
 
         <div class="phonecardscontainer" id="phonecardscontainer">
@@ -197,8 +183,64 @@
 
         </div>
 
-        <button class="scroll-button scroll-btn-right">&#10095;</button>
+        <button class="scroll-button scroll-btn-right" id="phone-right">&#10095;</button>
     </section>
+
+    <h1>Headphones</h1>
+    <section class="headphonesection">
+        <button class="scroll-button headphone-scroll-btn-left" id="headphone-left">&#10094;</button>
+
+
+        <div class="headphonecardscontainer" id="headphonecardscontainer">
+            <div class="headphonecard template">
+                <span class="about-headphone"></span>
+                <img class="headphoneimage" src="" alt="Phone 1">
+                <h3 class="headphonename"></h3>
+                <div class="headphonedescription">
+                </div>
+                <div class="buyheadphone">
+                    <span class="headphoneprice"></span>
+                    <button class="buyheadphone-btn"><i class="fa-solid fa-cart-shopping"></i>
+                        <span class="tooltip-text-btn">Shto ne koshin tim</span>
+
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+        <button class="scroll-button headphone-scroll-btn-right" id="headphone-right">&#10095;</button>
+    </section>
+
+
+    <h1>speakers</h1>
+    <section class="speakersection">
+        <button class="scroll-button speaker-scroll-btn-left" id="speaker-left">&#10094;</button>
+
+
+        <div class="speakercardscontainer" id="speakercardscontainer">
+            <div class="speakercard template">
+                <span class="about-speaker"></span>
+                <img class="speakerimage" src="" alt="Phone 1">
+                <h3 class="speakername"></h3>
+                <div class="speakerdescription">
+                </div>
+                <div class="buyspeaker">
+                    <span class="speakerprice"></span>
+                    <button class="buyspeaker-btn"><i class="fa-solid fa-cart-shopping"></i>
+                        <span class="tooltip-text-btn">Shto ne koshin tim</span>
+
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+        <button class="scroll-button speaker-scroll-btn-right" id="speaker-right">&#10095;</button>
+    </section>
+
 
     <!-- ketu mbaron seksioni i telefonave -->
 

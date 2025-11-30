@@ -1,26 +1,66 @@
 // ===========================================
-// LOAD DATA + INIT
+// LOAD DATA
 // ===========================================
 async function loadData() {
     try {
-        const [phonesResponse, containsResponse] = await Promise.all([
-            fetch('phones.json'),
-            fetch('contains.json')
+        const [phonesResponse, containsResponse, headphonesResponse,speakersResponse] = await Promise.all([
+            fetch('data/phones.json'),
+            fetch('data/contains.json'),
+            fetch('data/headphones.json'),
+            fetch('data/speakers.json')
         ]);
+
         const phones = await phonesResponse.json();
         const contains = await containsResponse.json();
+        const headphones = await headphonesResponse.json();
+        const speakers = await speakersResponse.json()
 
-        generatePhoneCards(phones);
+        // GENERATE PHONES
+        generateProductCards({
+            products: phones,
+            containerSelector: '.phonecardscontainer',
+            cardSelector: '.phonecard',
+            imageClass: '.phoneimage',
+            nameClass: '.phonename',
+            priceClass: '.phoneprice',
+            descClass: '.phonedescription'
+        });
+        scrollProducts('.phonecardscontainer', '#phone-left', '#phone-right', 300);
+
+        // GENERATE HEADPHONES
+        generateProductCards({
+            products: headphones,
+            containerSelector: '.headphonecardscontainer',
+            cardSelector: '.headphonecard',
+            imageClass: '.headphoneimage',
+            nameClass: '.headphonename',
+            priceClass: '.headphoneprice',
+            descClass: '.headphonedescription'
+        });
+        scrollProducts('.headphonecardscontainer', '#headphone-left', '#headphone-right', 300);
+
+         generateProductCards({
+            products: speakers,
+            containerSelector: '.speakercardscontainer',
+            cardSelector: '.speakercard',
+            imageClass: '.speakerimage',
+            nameClass: '.speakername',
+            priceClass: '.speakerprice',
+            descClass: '.speakerdescription'
+        });
+        scrollProducts('.speakercardscontainer', '#speaker-left', '#speaker-right', 300);
+
+
+        // GENERATE CONTENT
         generateContent(contains);
-        ready(); // atașează evenimente
 
-        // scroll carduri
-        scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+        // ATTACH CART EVENTS
+        ready();
 
-        // init map
+        // INIT MAP
         initMap();
 
-        // init carousel
+        // INIT CAROUSEL
         initCarousel('.right-menu .carousel', 3000);
 
     } catch (error) {
@@ -41,7 +81,6 @@ function initCarousel(carouselSelector, interval = 3000) {
     const dotsContainer = carousel.querySelector('.carousel-dots');
     let currentIndex = 0;
 
-    // creează dot-uri
     const dots = [];
     images.forEach((img, i) => {
         const dot = document.createElement('span');
@@ -62,13 +101,11 @@ function initCarousel(carouselSelector, interval = 3000) {
         });
     }
 
-    // autoplay
     setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
         showImage(currentIndex);
     }, interval);
 
-    // butoane prev/next
     const btnPrev = carousel.querySelector('.prev');
     const btnNext = carousel.querySelector('.next');
 
@@ -81,7 +118,6 @@ function initCarousel(carouselSelector, interval = 3000) {
         showImage(currentIndex);
     });
 }
-
 
 // ===========================================
 // CART ICONS
@@ -115,7 +151,7 @@ function showPhonesonly() {
 // LEAFLET MAP
 // ===========================================
 function initMap() {
-    var map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13);
+    const map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors'
@@ -163,15 +199,15 @@ function quantityChanget(event) {
 }
 
 function addToCartClicked(event) {
-    const button = event.target.closest('.buyphone-btn');
+    const button = event.target.closest('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn');
     if (!button) return;
 
-    const shopItem = button.closest('.phonecard');
+    const shopItem = button.closest('.phonecard, .headphonecard,.speakercard');
     if (!shopItem) return;
 
-    const title = shopItem.querySelector('.phonename')?.innerText || "Titlu lipsë";
-    const price = shopItem.querySelector('.phoneprice')?.innerText || "0";
-    const imageSrc = shopItem.querySelector('.phoneimage')?.src || "";
+    const title = shopItem.querySelector('.phonename, .headphonename,.speakername')?.innerText || "Titlu lipsë";
+    const price = shopItem.querySelector('.phoneprice, .headphoneprice,.speakerprice')?.innerText || "0";
+    const imageSrc = shopItem.querySelector('.phoneimage, .headphoneimage,speakerimage')?.src || "";
 
     const product = { title, price, imageSrc, quantity: 1 };
 
@@ -186,6 +222,7 @@ function addToCartClicked(event) {
     addItemToCard(title, price, imageSrc);
     updateCartTotal();
 }
+
 
 function addItemToCard(title, price, imageSrc) {
     const cartItems = document.getElementsByClassName('cart-items')[0];
@@ -227,7 +264,7 @@ function updateCartTotal() {
 }
 
 // ===========================================
-// GENERATE CONTENT & PHONE CARDS
+// GENERATE CONTENT & PRODUCT CARDS
 // ===========================================
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
@@ -245,35 +282,44 @@ function generateContent(contains) {
     });
 }
 
-function generatePhoneCards(phones) {
-    const container = document.querySelector('.phonecardscontainer');
-    const templateCard = container.querySelector('.phonecard');
+function generateProductCards({ products, containerSelector, cardSelector, imageClass, nameClass, priceClass, descClass }) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    const templateCard = container.querySelector(cardSelector);
     templateCard.style.display = 'none';
 
-    phones.forEach(phone => {
+    products.forEach(product => {
         const newCard = templateCard.cloneNode(true);
-        newCard.querySelector('.phoneimage').src = phone.Image;
-        newCard.querySelector('.phonename').textContent = phone.name;
-        newCard.querySelector('.phoneprice').textContent = `${phone.price}`;
-        newCard.querySelector('.phonedescription').textContent = phone.description;
+
+        const img = newCard.querySelector(imageClass);
+        if (img) img.src = product.image;
+
+        const name = newCard.querySelector(nameClass);
+        if (name) name.textContent = product.name;
+
+        const price = newCard.querySelector(priceClass);
+        if (price) price.textContent = product.price;
+
+        const desc = newCard.querySelector(descClass);
+        if (desc) desc.textContent = product.description;
+
         newCard.style.display = 'block';
         container.appendChild(newCard);
 
-        const addToCartBtn = newCard.querySelector('.buyphone-btn');
+        const addToCartBtn = newCard.querySelector('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn');
         if (addToCartBtn) addToCartBtn.addEventListener('click', addToCartClicked);
-    });
 
-    scrollPhones('.phonecardscontainer', '.scroll-btn-left', '.scroll-btn-right', 300);
+    });
 }
 
 // ===========================================
-// SCROLL PHONES
+// SCROLL PRODUCTS
 // ===========================================
-function scrollPhones(containerSelector, btnLeftSelector, btnRightSelector, scrollAmount = 1000) {
+function scrollProducts(containerSelector, btnLeftSelector, btnRightSelector, scrollAmount = 1000) {
     const container = document.querySelector(containerSelector);
     const btnLeft = document.querySelector(btnLeftSelector);
     const btnRight = document.querySelector(btnRightSelector);
-
     if (!container || !btnLeft || !btnRight) return;
 
     function updateButtons() {
