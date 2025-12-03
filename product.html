@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script type="module" src="script.js" defer></script>
     <script src="product.js" defer></script>
+    <script src="review.js" defer></script>
 </head>
 
 <body>
@@ -66,7 +67,7 @@
                 </a>
                 <ul class="products-list">
                     <li>
-                        <a href="telefona.html">
+                        <a href="">
                             <i class="fa-solid fa-mobile mobile-icon"></i>Telefona mobil
                         </a>
                     </li>
@@ -83,17 +84,58 @@
     </div>
 
 
+    <h2 class="product-name main-product-description"></h2>
     <div class="product-detail">
 
-        <div class="product-gallery">
-            <img id="main-product-image" class="main-product-image" src="" alt="Main product image">
-            <div id="thumbnails-container" class="thumbs-container"></div>
+        <div class="product-display">
+            <div class="product-gallery">
+
+                <img id="main-product-image" class="main-product-image" src="" alt="Main product image">
+                <div id="thumbnails-container" class="thumbs-container"></div>
+            </div>
+            <div class="product-first-display">
+                <div class="all-about-product">
+                    <div class="review-summary">
+                        <div class="stars">
+
+                        </div>
+                        <span class="average-rating">4.72</span>
+                        <span class="total-reviews">(102)</span>
+                    </div>
+
+
+
+                    <div class="all-description-product">
+
+                        <div class="option-group">
+                            <label>Zgjidh Memorie:</label>
+                            <select id="storage-select"></select>
+                        </div>
+
+                        <div class="option-group">
+                            <label>Zgjidh Ngjyra:</label>
+                            <select id="color-select"></select>
+                        </div>
+
+                        <div>
+                            <p id="product-description" class="product-description">
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
         </div>
+
+
         <div class="product-second-display">
 
-            <h2 id="product-name"></h2>
+            <h2 class="product-name"></h2>
             <p id="product-price"></p>
-            <p id="product-description"></p>
             <div class="buy-product-div">
                 <button id="add-to-cart-btn">
                     <span class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></span>

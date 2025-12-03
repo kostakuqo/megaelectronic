@@ -3,37 +3,42 @@
     "contain": "mobile phones",
     "image": "images/phone.products.jpg",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "telefona"
   },
   {
     "contain": "speakers",
     "image": "images/speakers.jpg",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "speakers"
   },
   {
     "contain": "headphones",
     "image": "images/headphones.webp",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "headphones"
   },
   {
     "contain": "chargers",
     "image": "images/chargers.jpg",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "chargers"
   },
   {
     "contain": "covers",
     "image": "images/covers.webp",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "covers"
   },
   {
     "contain": "scooters",
     "image": "images/scooters.webp",
     "icon": "fa-solid fa-arrow-up-right-from-square",
-    "text": "shiko produktet...."
+    "text": "shiko produktet....",
+    "type": "scooters"
   }
-
 ]

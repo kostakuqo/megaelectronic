@@ -1,3 +1,110 @@
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.product-display {
+    display: flex;
+    width: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 12px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+
+        0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.all-description-product {
+    display: flex;
+    flex-direction: column;
+    /* păstrezi direcția verticală */
+    justify-content: center;
+    /* centru pe verticală */
+    align-items: center;
+    /* centru pe orizontală */
+}
+
+.main-product-description {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.product-description {
+    font-size: 12px;
+    margin: 6px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 10px;
+    width: 500px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    letter-spacing: 1px;
+}
+
+.product-description:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+.product-first-display {
+    width: 60%;
+}
+
+.option-group {
+    margin-bottom: 8px;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+
+}
+
+.review-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.stars {
+    color: gold;
+    font-size: 20px;
+}
+
+.average-rating {
+    font-weight: bold;
+}
+
+.total-reviews {
+    color: #555;
+    font-size: 14px;
+}
+
+
+
+.option-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+    width: 150px;
+}
+
+.option-group select {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 160px;
+}
+
 .product-detail {
     color: black;
     display: flex;
@@ -8,7 +115,7 @@
 
 .product-second-display {
     padding-right: 20px;
-    width: 30%;
+    width: 40%;
     /* Div evidențiat permanent */
 
     /* fundal gri deschis */
@@ -31,13 +138,14 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 40%;
 }
 
 .main-product-image {
     width: 100%;
     max-width: 500px;
     height: 400px;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 10px;
     background: #f8f8f8;
 }
@@ -142,25 +250,131 @@
     flex-grow: 1;
     /* ocupă restul butonului */
     display: flex;
-    align-items: center;
-    justify-content: center;
+
     /* text centrat pe verticală și orizontală */
     color: #0A79E0;
     font-size: 15px;
 
 
 }
-@media(max-width:500px){
-    .product-detail{
-        display: block;
-    }
-    .product-second-display{
-        width: 90%;
-    }
-    .main-product-image{
-        height: 200px;
-        width: 200px;
-        align-self: flex-start;
+
+@media (max-width: 500px) {
+
+    /* CONTAINER PRINCIPAL */
+    .product-detail {
+        display: flex;
+        flex-direction: column;
+        /* vertical */
+        gap: 15px;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
     }
 
+    /* SECȚIUNEA DISPLAY PRINCIPAL */
+    .product-display {
+        display: flex;
+        flex-direction: column;
+        /* vertical */
+        gap: 15px;
+        width: 95%;
+        margin: 0;
+    }
+
+    /* GALERIE + IMAGINE PRINCIPALĂ */
+    .product-gallery {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .main-product-image {
+        width: 400px;
+        
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .thumbs-container {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    /* SECȚIUNEA FIRST DISPLAY */
+    .product-first-display {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .all-about-product {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .all-description-product {
+        width: 100%;
+    }
+
+    .option-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+        gap: 5px;
+        margin-left: 10px;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .review-summary {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    /* SECȚIUNEA SECOND DISPLAY */
+    .product-second-display {
+        width: 90%;
+        padding: 15px;
+
+    }
+
+    /* DESCRIERE PRODUS */
+    .product-description {
+        width: 90%;
+        font-size: 0.9rem;
+        color: #555;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    /* BUTOANE */
+    .buy-product-div {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #add-to-cart-btn,
+    #add-to-favourites-btn {
+        width: 100%;
+    }
+
+    /* NUME PRODUS */
+    .product-name {
+        font-size: 1rem;
+        text-align: center;
+    }
 }

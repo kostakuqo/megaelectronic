@@ -1,6 +1,13 @@
-// ===========================================
-// LOAD DATA
-// ===========================================
+function attachHeaderIcons() {
+    const cartIcon = document.querySelector(".fa-shopping-cart");
+    if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
+
+    const heartIcon = document.querySelector(".fa-heart");
+    if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
+
+    const userIcon = document.querySelector(".fa-user");
+    if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
+}
 async function loadData() {
     try {
         const [phonesResponse, containsResponse, headphonesResponse, speakersResponse, coversResponse, chargersResponse, scootersResponse] = await Promise.all([
@@ -22,7 +29,7 @@ async function loadData() {
         const chargers = await chargersResponse.json();
         const scooters = await scootersResponse.json();
 
-        // GENERATE PHONES
+
         generateProductCards({
             products: phones,
             containerSelector: '.phonecardscontainer',
@@ -34,7 +41,7 @@ async function loadData() {
         });
         scrollProducts('.phonecardscontainer', '#phone-left', '#phone-right', 300);
 
-        // GENERATE HEADPHONES
+
         generateProductCards({
             products: headphones,
             containerSelector: '.headphonecardscontainer',
@@ -89,39 +96,29 @@ async function loadData() {
 
 
 
-        // GENERATE CONTENT
+
         generateContent(contains);
         attachHeaderIcons();
 
-        // ATTACH CART EVENTS
+
         ready();
 
-        // INIT MAP
+
         initMap();
 
-        // INIT CAROUSEL
+
         initCarousel('.right-menu .carousel', 3000);
 
     } catch (error) {
         console.error(error);
     }
-    function attachHeaderIcons() {
-        const cartIcon = document.querySelector(".fa-shopping-cart");
-        if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
 
-        const heartIcon = document.querySelector(".fa-heart");
-        if (heartIcon) heartIcon.addEventListener('click', () => window.location.href = 'favorites.html');
 
-        const userIcon = document.querySelector(".fa-user");
-        if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
-    }
 }
 
 window.addEventListener('load', loadData);
+window.addEventListener('DOMContentLoaded', attachHeaderIcons);
 
-// ===========================================
-// CAROUSEL
-// ===========================================
 function initCarousel(carouselSelector, interval = 3000) {
     const carousel = document.querySelector(carouselSelector);
     if (!carousel) return;
@@ -168,14 +165,10 @@ function initCarousel(carouselSelector, interval = 3000) {
     });
 }
 
-// ===========================================
-// CART ICONS
-// ===========================================
 
 
-// ===========================================
-// SHOW ONLY PHONES SECTION
-// ===========================================
+
+
 function showPhonesonly() {
     let allSections = document.querySelectorAll('section');
     let phonesSection = document.querySelector('.phonesection');
@@ -187,9 +180,7 @@ function showPhonesonly() {
     if (footerSection) footerSection.style.display = "block";
 }
 
-// ===========================================
-// LEAFLET MAP
-// ===========================================
+
 function initMap() {
     const map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -203,9 +194,7 @@ function initMap() {
         .openPopup();
 }
 
-// ===========================================
-// CART FUNCTIONS
-// ===========================================
+
 function ready() {
     const removeCartButtons = document.getElementsByClassName("btn-danger");
     for (let button of removeCartButtons) button.addEventListener('click', removeCartItem);
@@ -240,7 +229,7 @@ function quantityChanget(event) {
 
 function addToCartClicked(input) {
     let product;
-    // Dacă input este un Event
+
     if (input instanceof Event) {
         const button = input.target.closest('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn,.buycover-btn,.buycharger-btn,.buyscooter-btn');
         if (!button) return;
@@ -254,7 +243,7 @@ function addToCartClicked(input) {
 
         product = { title, price, imageSrc, quantity: 1 };
     } else {
-        // Dacă input este un obiect produs
+
         product = { title: input.name || input.title, price: input.price, imageSrc: input.image || input.imageSrc, quantity: 1 };
     }
 
@@ -310,9 +299,7 @@ function updateCartTotal() {
     document.querySelector('.cart-total-price').innerText = '$' + total;
 }
 
-// ===========================================
-// GENERATE CONTENT & PRODUCT CARDS
-// ===========================================
+
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
     const templateContainer = document.querySelector(".main-container");
@@ -320,14 +307,28 @@ function generateContent(contains) {
 
     contains.forEach(contain => {
         const newContain = templateContainer.cloneNode(true);
+
         newContain.querySelector(".preview-contain").innerHTML = contain.contain;
         newContain.querySelector(".image-contain").src = contain.image;
-        newContain.querySelector(".icon-contain").src = contain.icon;
-        newContain.querySelector(".tooltip-text").text = contain.text;
+        newContain.querySelector(".icon-contain").innerHTML = `<i class="${contain.icon}"></i>`; // dacă ai clase FA
+        newContain.querySelector(".tooltip-text").textContent = contain.text;
         newContain.style.display = "block";
+
+
+        const redirectLink = newContain.querySelector('a.icon-contain-link');
+        if (redirectLink) redirectLink.removeAttribute('href');
+
         container.appendChild(newContain);
+
+
+        newContain.addEventListener('click', () => {
+            if (contain.type) {
+                window.location.href = `${contain.type}.html`;
+            }
+        });
     });
 }
+
 
 function generateProductCards({ products, containerSelector, cardSelector, imageClass, nameClass, priceClass, descClass }) {
     const container = document.querySelector(containerSelector);
@@ -339,7 +340,7 @@ function generateProductCards({ products, containerSelector, cardSelector, image
     products.forEach(product => {
         const newCard = templateCard.cloneNode(true);
 
-        // Populăm datele produsului
+
         const img = newCard.querySelector(imageClass);
         if (img) {
             img.src = product.images?.[0] || product.image || "";
@@ -352,21 +353,28 @@ function generateProductCards({ products, containerSelector, cardSelector, image
         if (price) price.textContent = product.price;
 
         const desc = newCard.querySelector(descClass);
-        if (desc) desc.textContent = product.description;
+        if (desc) {
+
+            const maxLength = 60;
+            if (product.description.length > maxLength) {
+                desc.textContent = product.description.slice(0, maxLength) + '...';
+            } else {
+                desc.textContent = product.description;
+            }
+        }
 
         newCard.style.display = 'block';
         container.appendChild(newCard);
 
-        // Butonul Add to Cart
+
         const addToCartBtn = newCard.querySelector('.buyphone-btn, .buyheadphone-btn, .buyspeaker-btn, .buycover-btn, .buycharger-btn, .buyscooter-btn');
         if (addToCartBtn) {
             addToCartBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // să nu deschidă pagina de detalii
-                addToCartClicked(product); // funcția ta existentă
+                e.stopPropagation();
+                addToCartClicked(product);
             });
         }
 
-        // Click pe card pentru a deschide pagina de detalii
         newCard.addEventListener('click', () => {
             localStorage.setItem('selectedProduct', JSON.stringify(product));
             window.location.href = 'product.html';
@@ -375,9 +383,7 @@ function generateProductCards({ products, containerSelector, cardSelector, image
 }
 
 
-// ===========================================
-// SCROLL PRODUCTS
-// ===========================================
+
 function scrollProducts(containerSelector, btnLeftSelector, btnRightSelector, scrollAmount = 1000) {
     const container = document.querySelector(containerSelector);
     const btnLeft = document.querySelector(btnLeftSelector);

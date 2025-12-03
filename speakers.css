@@ -10,7 +10,7 @@
 .speaker-scroll-btn-left {
     position: absolute;
     left: 14px;
-    top: 50%;
+    top: 45%;
     background-color: rgba(71, 135, 120, 0.8);
     color: white;
     border: none;
@@ -29,7 +29,7 @@
 .speaker-scroll-btn-right {
     position: absolute;
     right: 14px;
-    top: 50%;
+    top: 45%;
     background-color: rgba(71, 135, 120, 0.8);
     color: white;
     border: none;
