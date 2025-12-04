@@ -1,111 +1,214 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const product = JSON.parse(localStorage.getItem('selectedProduct'));
+
     if (!product) {
-        document.querySelector('.product-detail').innerHTML = "<p>Nu există produs selectat!</p>";
+        document.querySelector('.product-detail').innerHTML =
+            "<p>Nu există produs selectat!</p>";
         return;
     }
 
-    const nameElements = document.querySelectorAll('.product-name');
+    const nameEls = document.querySelectorAll('.product-name');
     const priceEl = document.getElementById('product-price');
     const descEl = document.getElementById('product-description');
     const mainImage = document.getElementById('main-product-image');
     const thumbnailsContainer = document.getElementById('thumbnails-container');
     const addToCartBtn = document.getElementById('add-to-cart-btn');
-    const colorSelect = document.getElementById('color-select');
-    const storageSelect = document.getElementById('storage-select');
 
-    const productName = product.name || product.title;
+    const colorBox = document.getElementById('color-options');
+    const storageBox = document.getElementById('storage-options');
+    const stateBox = document.getElementById('state-options');
 
-    // Setare nume, pret si descriere
-    nameElements.forEach(el => el.innerText = productName);
+    let selectedColor = null;
+    let selectedStorage = null;
+    let selectedState = null;
+
+    const title = product.name || product.title;
+
+    nameEls.forEach(el => el.innerText = title);
     priceEl.innerText = product.price;
     descEl.innerText = product.description;
 
-    // ----------------- COLOR OPTIONS -----------------
-    const colors = product.colors || {};
-    const colorKeys = Object.keys(colors);
+    if (product.image) mainImage.src = product.image;
 
-    if (colorKeys.length > 0) {
-        colorKeys.forEach(color => {
-            const option = document.createElement('option');
-            option.value = color;
-            option.textContent = color;
-            colorSelect.appendChild(option);
+
+
+
+    if (product.colors) {
+
+        Object.entries(product.colors).forEach(([color, img], i) => {
+
+            const btn = document.createElement('div');
+            btn.className = "option-item";
+            btn.innerText = color;
+
+            if (i === 0) {
+                btn.classList.add("active");
+                selectedColor = color;
+                mainImage.src = img;
+            }
+
+            btn.addEventListener('click', () => {
+
+                document
+                    .querySelectorAll('#color-options .option-item')
+                    .forEach(el => el.classList.remove('active'));
+
+                btn.classList.add("active");
+                selectedColor = color;
+                mainImage.src = img;
+
+            });
+
+            colorBox.appendChild(btn);
         });
-
-        // Setare imagine initiala pe prima culoare
-        mainImage.src = colors[colorKeys[0]];
-
-        colorSelect.addEventListener('change', () => {
-            mainImage.src = colors[colorSelect.value];
-        });
-    } else {
-        // fallback la imaginea default
-        const images = product.images || (product.image ? [product.image] : []);
-        if (images.length > 0) mainImage.src = images[0];
     }
 
-    // ----------------- STORAGE OPTIONS -----------------
-    if (product.storageOptions && product.storageOptions.length > 0) {
-        product.storageOptions.forEach(storage => {
-            const option = document.createElement('option');
-            option.value = storage;
-            option.textContent = storage;
-            storageSelect.appendChild(option);
+  
+
+    if (product.storageOptions) {
+
+        product.storageOptions.forEach((storage, i) => {
+
+            const btn = document.createElement('div');
+            btn.className = "option-item";
+            btn.innerText = storage;
+
+            if (i === 0) {
+                btn.classList.add("active");
+                selectedStorage = storage;
+            }
+
+            btn.addEventListener('click', () => {
+
+                document
+                    .querySelectorAll('#storage-options .option-item')
+                    .forEach(el => el.classList.remove('active'));
+
+                btn.classList.add("active");
+                selectedStorage = storage;
+
+            });
+
+            storageBox.appendChild(btn);
         });
     }
 
-    // ----------------- THUMBNAILS -----------------
-    thumbnailsContainer.innerHTML = '';
-    const images = product.images || (product.image ? [product.image] : []);
-    images.forEach((src, index) => {
+  
+
+    if (product.state) {
+
+      
+
+        const states = [product.state];
+
+        states.forEach((state, i) => {
+
+            const btn = document.createElement('div');
+            btn.className = "option-item";
+            btn.innerText = state;
+
+            if (i === 0) {
+                btn.classList.add("active");
+                selectedState = state;
+            }
+
+            btn.addEventListener('click', () => {
+
+                document
+                    .querySelectorAll('#state-options .option-item')
+                    .forEach(el => el.classList.remove('active'));
+
+                btn.classList.add("active");
+                selectedState = state;
+
+            });
+
+            stateBox.appendChild(btn);
+        });
+    }
+
+    
+
+    thumbnailsContainer.innerHTML = "";
+
+    const images =
+        product.images ||
+        (product.image ? [product.image] : []);
+
+    images.forEach((img, i) => {
+
         const thumb = document.createElement('img');
-        thumb.src = src;
-        thumb.classList.add('thumb-image');
-        if (index === 0) thumb.classList.add('active');
+        thumb.src = img;
+        thumb.classList.add("thumb-image");
+
+        if (i === 0) thumb.classList.add("active");
 
         thumb.addEventListener('click', () => {
-            mainImage.src = src;
-            document.querySelectorAll('.thumb-image').forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
+
+            mainImage.src = img;
+
+            document
+                .querySelectorAll(".thumb-image")
+                .forEach(el => el.classList.remove("active"));
+
+            thumb.classList.add("active");
+
         });
 
         thumbnailsContainer.appendChild(thumb);
     });
 
-    // ----------------- ADD TO CART -----------------
-    addToCartBtn.addEventListener('click', () => {
-        const selectedColor = colorSelect.value || null;
-        const selectedStorage = storageSelect.value || null;
-        const selectedImage = selectedColor ? colors[selectedColor] : mainImage.src;
 
-        addToCart(product, selectedImage, selectedColor, selectedStorage);
+    addToCartBtn.addEventListener('click', () => {
+
+        if (!selectedColor || !selectedStorage || !selectedState) {
+            alert("Te lutem zgjidh ngjyren, memorien dhe gjendjen!");
+            return;
+        }
+
+        const selectedImage =
+            product.colors?.[selectedColor] || mainImage.src;
+
+        addToCart(
+            product,
+            selectedImage,
+            selectedColor,
+            selectedStorage,
+            selectedState
+        );
     });
+
 });
 
-function addToCart(product, selectedImage, selectedColor, selectedStorage) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Verificam daca produsul cu aceleasi optiuni exista deja
-    const existing = cart.find(p => 
-        p.title === (product.name || product.title) &&
-        p.color === selectedColor &&
-        p.storage === selectedStorage
+
+function addToCart(product, image, color, storage, state) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const title = product.name || product.title;
+
+    const existing = cart.find(p =>
+        p.title === title &&
+        p.color === color &&
+        p.storage === storage &&
+        p.state === state
     );
 
-    if (existing) {
-        existing.quantity += 1;
-    } else {
+    if (existing)
+        existing.quantity++;
+    else
         cart.push({
-            title: product.name || product.title,
+            title,
             price: product.price,
-            imageSrc: selectedImage,
-            color: selectedColor,
-            storage: selectedStorage,
+            imageSrc: image,
+            color,
+            storage,
+            state,
             quantity: 1
         });
-    }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${product.name || product.title} a fost adăugat în coș!`);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${title} u shtua ne koshin tend te blerjeve`);
 }

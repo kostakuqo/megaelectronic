@@ -1,16 +1,20 @@
 [
     {
-        "name": "Iphone 12 Pro Max",
+        "name": "Iphone 16 pro max",
         "price": "1250$",
         "description": "6.9 inch LTPO Super Retina XDR OLED, 120Hz, HDR10, Dolby Vision, 1000 nits (typ), 1600 nits (HBM), 3000 nits (peak), 48 MP, f/1.6, 24mm (wide), 1/1.28 1.22µm, dual pixel PDAF, sensor-shift OIS 48 MP, f/2.8, 100mm (periscope telephoto), 1/2.55 0.7µm, PDAF, 3D sensor‑shift OIS, 4x optical zoom 48 MP, f/2.2, 13mm, 120˚ (ultrawide), 1/2.55, 0.7µm, PDAF TOF 3D LiDAR scanner (depth), 12 GB RAM, Apple A19 Pro (3 nm) CPU Hexa-core, Li-Ion 4832 mAh - Nano SIM model Li-Ion 5088 mAh - eSIM only model",
         "colors": {
-            "Red": "images/Apple-iPhone-16-Pro-hero-240909_inline.jpg.large.jpg",
-            "Blue": "images/chargers.jpg"
+            "orange": "images/iphone/orangeiphone.webp",
+            "silver": "images/iphone/silveriphone.jpg",
+            "black": "images/iphone/blackiphone.webp"
         },
         "images": [
-            "images/Apple-iPhone-16-Pro-hero-240909_inline.jpg.large.jpg",
-            "images/chargers.jpg",
-            "images/chargers.jpg"
+            "images/iphone/orangeiphone.webp",
+            "images/iphone/silveriphone.jpg",
+            "images/iphone/blackiphone.webp"
+        ],
+        "state": [
+            "i Ri"
         ],
         "storageOptions": [
             "128GB",

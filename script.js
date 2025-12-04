@@ -310,7 +310,7 @@ function generateContent(contains) {
 
         newContain.querySelector(".preview-contain").innerHTML = contain.contain;
         newContain.querySelector(".image-contain").src = contain.image;
-        newContain.querySelector(".icon-contain").innerHTML = `<i class="${contain.icon}"></i>`; // dacă ai clase FA
+        newContain.querySelector(".icon-contain").innerHTML = `<i class="${contain.icon}"></i>`; 
         newContain.querySelector(".tooltip-text").textContent = contain.text;
         newContain.style.display = "block";
 

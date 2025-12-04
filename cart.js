@@ -12,7 +12,7 @@ function renderCart() {
     if (cart.length === 0) {
         const emptyMessage = document.createElement('div');
         emptyMessage.classList.add('empty-message');
-        emptyMessage.innerHTML = `<p>🛒 Koshi este gol! Adauga produse pentru a plasa o comanda.</p>`;
+        emptyMessage.innerHTML = `<p>🛒 Koshi eshte bosh, shto nje produkt per te derguar nje porosi!</p>`;
         cartItemsContainer.appendChild(emptyMessage);
         document.querySelector('.cart-total-price').innerText = '$0';
         return;
@@ -41,14 +41,12 @@ function renderCart() {
 
         cartItemsContainer.appendChild(cartRow);
 
-        // Remove button
         cartRow.querySelector('.btn-danger').addEventListener('click', () => {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
         });
 
-        // Quantity input
         cartRow.querySelector('.cart-quantity-input').addEventListener('change', e => {
             let qty = parseInt(e.target.value);
             if (isNaN(qty) || qty < 1) qty = 1;
@@ -69,7 +67,7 @@ function updateCartTotal() {
         const priceElement = row.querySelector('.cart-price');
         const quantityElement = row.querySelector('.cart-quantity-input');
 
-        if (!priceElement || !quantityElement) return; // <-- skip dacă nu există
+        if (!priceElement || !quantityElement) return;
 
         const price = parseFloat(priceElement.innerText.replace("$", ""));
         const quantity = parseInt(quantityElement.value);
