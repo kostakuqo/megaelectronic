@@ -85,7 +85,7 @@ function purchaseClicked() {
         return;
     }
 
-    alert('Faleminderit pentru comanda ta!');
+    alert('Faleminderit per porosine tuaj!');
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();

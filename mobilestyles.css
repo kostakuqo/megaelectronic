@@ -1,0 +1,91 @@
+@media (max-width: 768px) {
+
+    .about-contain {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .about-contain::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main-container {
+        min-width: 80%;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+    }
+
+    .contain-dots {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 5px;
+        padding: 10px;
+    }
+
+    .contain-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ccc;
+        transition: .3s;
+    }
+
+    .contain-dot.active {
+        background: green;
+        transform: scale(1.2);
+    }
+
+    .contain-dots {
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .contain-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        background-color: #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .phonecardscontainer::-webkit-scrollbar-thumb,
+    .headphonecardscontainer::-webkit-scrollbar-thumb,
+    .speakercardscontainer::-webkit-scrollbar-thumb,
+    .covercardscontainer::-webkit-scrollbar-thumb,
+    .chargercardscontainer::-webkit-scrollbar-thumb,
+    .scootercardscontainer::-webkit-scrollbar-thumb {
+        background-color: green; 
+        border-radius: 4px;
+    }
+
+    .phonecardscontainer::-webkit-scrollbar-track,
+    .headphonecardscontainer::-webkit-scrollbar-track,
+    .speakercardscontainer::-webkit-scrollbar-track,
+    .covercardscontainer::-webkit-scrollbar-track,
+    .chargercardscontainer::-webkit-scrollbar-track,
+    .scootercardscontainer::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    .phonecardscontainer,
+    .headphonecardscontainer,
+    .speakercardscontainer,
+    .covercardscontainer,
+    .chargercardscontainer,
+    .scootercardscontainer {
+        scrollbar-color: green #f1f1f1; 
+    }
+}
+

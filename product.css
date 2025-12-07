@@ -1,7 +1,7 @@
 html,
 body {
     margin: 0px;
-    padding: 0px;
+    padding-top: 80px;
 }
 
 .product-display {
@@ -138,18 +138,12 @@ label {
 .product-second-display {
     padding-right: 20px;
     width: 40%;
-    /* Div evidențiat permanent */
 
-    /* fundal gri deschis */
     border-radius: 12px;
-    /* colțuri rotunjite */
     padding: 20px;
-    /* spațiu interior */
 
-    /* centrare pe pagină */
     box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.08),
-        /* umbră subtilă */
         0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -165,7 +159,6 @@ label {
     border-radius: 12px;
     box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.08),
-        /* umbră subtilă */
         0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -184,7 +177,6 @@ label {
     justify-content: center;
     flex-wrap: nowrap;
     overflow-x: hidden;
-    /* ascunde scrollbar-ul */
 }
 
 .thumb-image {
@@ -211,12 +203,9 @@ label {
 #add-to-cart-btn {
     display: flex;
     align-items: stretch;
-    /* icon + text la înălțime completă */
     border: none;
     border-radius: 10px;
-    /* border-radius pe întreg butonul */
     overflow: hidden;
-    /* ca icon-ul să nu depășească colțurile */
     cursor: pointer;
     width: 100%;
     font-weight: bold;
@@ -253,21 +242,16 @@ label {
     align-items: center;
     justify-content: center;
     background-color: #FF1D25;
-    /* roșu */
     padding: 15px;
-    /* spațiu lateral doar în interiorul icon-ului */
     flex-shrink: 0;
     border-bottom-right-radius: 12px;
-    /* să nu se micșoreze */
 }
 
 #add-to-cart-btn .cart-text {
     flex-grow: 1;
-    /* ocupă restul butonului */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* text centrat pe verticală și orizontală */
     color: white;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
@@ -277,10 +261,8 @@ label {
 
 #add-to-favourites-btn .cart-text {
     flex-grow: 1;
-    /* ocupă restul butonului */
     display: flex;
-
-    /* text centrat pe verticală și orizontală */
+    padding-top: 10px;
     color: #0A79E0;
     font-size: 15px;
 
