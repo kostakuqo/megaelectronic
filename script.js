@@ -1,4 +1,3 @@
-// ===== HEADER ICONS =====
 function attachHeaderIcons() {
     const cartIcon = document.querySelector(".fa-shopping-cart");
     if (cartIcon) cartIcon.addEventListener('click', () => window.location.href = 'cart.html');
@@ -10,7 +9,6 @@ function attachHeaderIcons() {
     if (userIcon) userIcon.addEventListener('click', () => window.location.href = 'login.html');
 }
 
-// ===== LOAD DATA =====
 async function loadData() {
     try {
         const [phonesResponse, containsResponse, headphonesResponse, speakersResponse, coversResponse, chargersResponse, scootersResponse] = await Promise.all([
@@ -97,20 +95,13 @@ async function loadData() {
             descClass: '.scooterdescription'
         });
         scrollProducts('.scootercardscontainer', '#scooter-left', '#scooter-right', 300);
-
-        // Generate contain section
         generateContent(contains);
-
-        // Attach header icons
         attachHeaderIcons();
-
-        // Initialize other functions
         initContainSwipe();
         ready();
         initMap();
         initCarousel('.right-menu .carousel', 3000);
 
-        // ===== INIT SEARCH =====
         const allProducts = [
             ...phones,
             ...headphones,
@@ -129,17 +120,13 @@ async function loadData() {
 window.addEventListener('load', loadData);
 window.addEventListener('DOMContentLoaded', attachHeaderIcons);
 
-// ===== SEARCH FUNCTION =====
-// ===== SEARCH FUNCTION =====
 function initSearch(allProducts) {
     const searchInput = document.querySelector('.search-input');
     const resultsContainer = document.getElementById('search-results');
-
-    // Folosim cardul template ascuns
     const templateCard = document.querySelector('.phonecard.template');
 
     searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
+        const query = searchInput.value.trim().toLowerCase();
         resultsContainer.innerHTML = '';
 
         if (!query) {
@@ -149,56 +136,55 @@ function initSearch(allProducts) {
 
         resultsContainer.style.display = 'grid';
 
-        const filtered = allProducts.filter(product => product.name.toLowerCase().includes(query));
+        const filtered = allProducts.filter(product =>
+            product.name.toLowerCase().includes(query)
+        );
 
-        if (filtered.length === 0) {
-            const msg = document.createElement('div');
-            msg.textContent = "Niciun rezultat";
-            msg.style.gridColumn = '1 / -1';
-            resultsContainer.appendChild(msg);
-            return;
-        }
+        const header = document.createElement('div');
+        header.className = 'search-header';
+        header.textContent =
+            `${filtered.length} produkte te gjetura per "${query}"`;
+
+        header.style.gridColumn = '1 / -1';
+        header.style.fontWeight = 'bold';
+        header.style.padding = '10px 0';
+
+        resultsContainer.appendChild(header);
+
+        if (filtered.length === 0) return;
 
         filtered.forEach(product => {
-            // Clonează template-ul
             const card = templateCard.cloneNode(true);
             card.classList.remove('template');
-            card.style.display = 'block'; // fă-l vizibil
+            card.style.display = 'block';
 
-            // Imagine
-            const img = card.querySelector('.phoneimage');
-            if (img) img.src = product.images?.[0] || product.image || '';
+            card.querySelector('.phoneimage').src =
+                product.images?.[0] || product.image || '';
 
-            // Nume
-            const name = card.querySelector('.phonename');
-            if (name) name.textContent = product.name;
+            card.querySelector('.phonename').textContent = product.name;
+            card.querySelector('.phoneprice').textContent = product.price;
 
-            // Preț
-            const price = card.querySelector('.phoneprice');
-            if (price) price.textContent = product.price;
-
-            // Descriere
             const desc = card.querySelector('.phonedescription');
-            if (desc) {
-                const maxLength = 20;
-                desc.textContent = product.description
-                    ? (product.description.length > maxLength ? product.description.slice(0, maxLength) + '...' : product.description)
-                    : '';
-            }
+            desc.textContent = product.description
+                ? (product.description.length > 20
+                    ? product.description.slice(0, 20) + '...'
+                    : product.description)
+                : '';
 
-            // Click pe card (fără să fie buton)
-            card.addEventListener('click', (e) => {
+            card.addEventListener('click', e => {
                 if (!e.target.closest('.buyphone-btn')) {
-                    localStorage.setItem('selectedProduct', JSON.stringify(product));
+                    localStorage.setItem(
+                        'selectedProduct',
+                        JSON.stringify(product)
+                    );
                     window.location.href = 'product.html';
                 }
             });
 
-            // Click pe Add to Cart
-            const addToCartBtn = card.querySelector('.buyphone-btn');
-            if (addToCartBtn) {
-                addToCartBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // nu deschide pagina
+            const btn = card.querySelector('.buyphone-btn');
+            if (btn) {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
                     addToCartClicked(product);
                 });
             }
@@ -207,9 +193,9 @@ function initSearch(allProducts) {
         });
     });
 
-    // Ascundem search-ul dacă facem click în afara lui
     document.addEventListener('click', e => {
-        if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+        if (!searchInput.contains(e.target) &&
+            !resultsContainer.contains(e.target)) {
             resultsContainer.style.display = 'none';
         }
     });
@@ -221,7 +207,6 @@ function initSearch(allProducts) {
 
 
 
-// ===== GENERATE PRODUCT CARDS =====
 function generateProductCards({ products, containerSelector, cardSelector, imageClass, nameClass, priceClass, descClass }) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
@@ -265,7 +250,6 @@ function generateProductCards({ products, containerSelector, cardSelector, image
     });
 }
 
-// ===== SCROLL PRODUCTS =====
 function scrollProducts(containerSelector, btnLeftSelector, btnRightSelector, scrollAmount = 1000) {
     const container = document.querySelector(containerSelector);
     const btnLeft = document.querySelector(btnLeftSelector);
@@ -291,7 +275,6 @@ function scrollProducts(containerSelector, btnLeftSelector, btnRightSelector, sc
     updateButtons();
 }
 
-// ===== CART FUNCTIONS =====
 function ready() {
     const removeCartButtons = document.getElementsByClassName("btn-danger");
     for (let button of removeCartButtons) button.addEventListener('click', removeCartItem);
@@ -394,7 +377,6 @@ function updateCartTotal() {
     document.querySelector('.cart-total-price').innerText = '$' + total;
 }
 
-// ===== CONTAIN SECTION =====
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
     const templateContainer = document.querySelector(".main-container");
@@ -422,7 +404,6 @@ function generateContent(contains) {
     });
 }
 
-// ===== CONTAIN SWIPE =====
 function initContainSwipe() {
     const container = document.querySelector('.about-contain');
     if (!container) return;
@@ -475,7 +456,6 @@ function initContainSwipe() {
     });
 }
 
-// ===== CAROUSEL =====
 function initCarousel(carouselSelector, interval = 3000) {
     const carousel = document.querySelector(carouselSelector);
     if (!carousel) return;
@@ -522,7 +502,6 @@ function initCarousel(carouselSelector, interval = 3000) {
     });
 }
 
-// ===== MAP =====
 function initMap() {
     const map = L.map('map').setView([41.32832421751286, 19.814152215343267], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

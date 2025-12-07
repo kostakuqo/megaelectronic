@@ -19,11 +19,8 @@ body {
 .all-description-product {
     display: flex;
     flex-direction: column;
-    /* păstrezi direcția verticală */
     justify-content: center;
-    /* centru pe verticală */
     align-items: center;
-    /* centru pe orizontală */
 }
 
 .main-product-description {
@@ -271,28 +268,23 @@ label {
 
 @media (max-width: 500px) {
 
-    /* CONTAINER PRINCIPAL */
     .product-detail {
         display: flex;
         flex-direction: column;
-        /* vertical */
         gap: 15px;
         width: 100%;
         margin: 0;
         padding: 10px;
     }
 
-    /* SECȚIUNEA DISPLAY PRINCIPAL */
     .product-display {
         display: flex;
         flex-direction: column;
-        /* vertical */
         gap: 15px;
         width: 95%;
         margin: 0;
     }
 
-    /* GALERIE + IMAGINE PRINCIPALĂ */
     .product-gallery {
         width: 100%;
         display: flex;
@@ -317,7 +309,6 @@ label {
         width: 100%;
     }
 
-    /* SECȚIUNEA FIRST DISPLAY */
     .product-first-display {
         width: 100%;
         display: flex;
@@ -355,14 +346,12 @@ label {
         gap: 5px;
     }
 
-    /* SECȚIUNEA SECOND DISPLAY */
     .product-second-display {
         width: 90%;
         padding: 15px;
 
     }
 
-    /* DESCRIERE PRODUS */
     .product-description {
         width: 90%;
         font-size: 0.9rem;
@@ -372,7 +361,6 @@ label {
         border-radius: 8px;
     }
 
-    /* BUTOANE */
     .buy-product-div {
         flex-direction: column;
         gap: 10px;
@@ -383,7 +371,6 @@ label {
         width: 100%;
     }
 
-    /* NUME PRODUS */
     .product-name {
         font-size: 1rem;
         text-align: center;

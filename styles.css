@@ -11,10 +11,15 @@ html {
     overflow-x: hidden;
 }
 
-/* Containerul de rezultate search */
 
 .search-container {
     position: relative;
+}
+.search-header{
+    color: black;
+    display: flex;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
 }
 
 #search-results {
@@ -26,7 +31,6 @@ html {
     border: 1px solid #ccc;
     overflow-y: auto;
     z-index: 9999;
-    /* foarte mare, ca să fie peste tot */
     display: none;
     max-height: 670px;
     padding: 10px;
@@ -53,16 +57,13 @@ html {
 .secondary-header {
     position: fixed;
     top: 70px;
-    /* ajustează după înălțimea header-ului tău */
     left: 0;
     width: 100%;
     z-index: 9998;
 }
 
-/* Ca să nu fie acoperit conținutul de meniu */
 body {
     padding-top: 135px;
-    /* ajustează după cât de înalt este header-ul tău */
 }
 
 
@@ -1186,13 +1187,9 @@ h1 {
 
     #search-rezult {
         display: grid;
-        /* grid în loc de flex */
         grid-template-columns: repeat(2, 1fr);
-        /* 2 carduri pe rând */
         gap: 10px;
-        /* spațiu între carduri */
         overflow-x: hidden;
-        /* eliminăm scroll-ul pe orizontală */
         padding: 10px;
     }
 

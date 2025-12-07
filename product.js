@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (product.image) mainImage.src = product.image;
 
-    // ----------------- COLORS -----------------
     if (product.colors) {
         Object.entries(product.colors).forEach(([color, img], i) => {
             const btn = document.createElement('div');
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedColor = color;
                 mainImage.src = img;
 
-                // Actualizare thumbnail activ
                 document.querySelectorAll(".thumb-image").forEach(el => {
                     el.classList.toggle("active", el.src === img);
                 });
@@ -60,10 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
             colorBox.appendChild(btn);
         });
     } else {
-        colorBox.style.display = "none"; // ascunde selectorul dacă nu există
+        colorBox.style.display = "none";
     }
 
-    // ----------------- STORAGE -----------------
     if (product.storageOptions) {
         product.storageOptions.forEach((storage, i) => {
             const btn = document.createElement('div');
@@ -89,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedStorage = null;
     }
 
-    // ----------------- STATE -----------------
     if (product.state) {
         const states = [product.state];
 
@@ -117,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedState = null;
     }
 
-    // ----------------- THUMBNAILS -----------------
     thumbnailsContainer.innerHTML = "";
     const images = product.images || (product.image ? [product.image] : []);
 
@@ -137,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         thumbnailsContainer.appendChild(thumb);
     });
 
-    // ----------------- ADD TO CART -----------------
     addToCartBtn.addEventListener('click', () => {
 
         if (
@@ -145,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (product.storageOptions && !selectedStorage) ||
             (product.state && !selectedState)
         ) {
-            alert("Te lutem zgjidh toate opțiunile disponibile!");
+            alert("Te lutem zgjidh ");
             return;
         }
 
@@ -163,11 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// ----------------- FUNCTION ADD TO CART -----------------
 function addToCart(product, image, color, storage, state) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const title = product.name || product.title;
-
     const existing = cart.find(p =>
         p.title === title &&
         p.color === color &&
@@ -187,5 +179,5 @@ function addToCart(product, image, color, storage, state) {
     });
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${title} a fost adăugat în coș!`);
+    alert(`${title} u shtua ne koshin e blerjeve!`);
 }
