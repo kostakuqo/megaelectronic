@@ -81,7 +81,7 @@ function updateCartTotal() {
 
 function purchaseClicked() {
     if (cart.length === 0) {
-        alert("Coșul este gol!");
+        alert("Koshi juaj eshte bosh! Shto nje produkt per te vazhduar me porosine.");
         return;
     }
 

@@ -1121,7 +1121,8 @@ h1 {
 
 .empty-message {
     color: black;
-
+    padding: 12px;
+    text-align: center;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -1293,6 +1294,22 @@ h1 {
         gap: 10px;
         overflow-x: hidden;
         padding: 10px;
+    }
+
+    .popup {
+        color: black;
+        position: fixed;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        z-index: 1000;
+        display: none;
+        transition: 0.2s ease;
     }
 
 }
