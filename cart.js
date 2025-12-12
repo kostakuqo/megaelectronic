@@ -85,8 +85,60 @@ function purchaseClicked() {
         return;
     }
 
-    alert('Faleminderit per porosine tuaj!');
+    openPopup();
+}
+
+
+document.getElementById('order-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const order = {
+        customer: {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            phone: form.phone.value.trim(),
+            address: form.address.value.trim(),
+        },
+        products: cart,
+        total: cart.reduce((sum, p) => sum + parseFloat(p.price) * p.quantity, 0)
+    };
+
+    console.log("🟦 Porosia e derguar:", order);
+
+    alert("Faleminderit! Porosia u dërgua me sukses.");
+
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
+
+    form.reset();
+    hidePopup();
+});
+
+
+
+
+
+
+
+const popup = document.getElementById('popup');
+const overlay = document.getElementById('popup-overlay');
+const closePopup = document.getElementById('close-popup');
+
+function openPopup() {
+    popup.classList.add('show');
+    overlay.classList.add('show');
 }
+
+function hidePopup() {
+    popup.classList.remove('show');
+    overlay.classList.remove('show');
+}
+
+// Închidere la apăsarea butonului X
+closePopup.addEventListener('click', hidePopup);
+
+// Închidere la click în afara popup-ului
+overlay.addEventListener('click', hidePopup);

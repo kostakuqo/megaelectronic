@@ -94,6 +94,26 @@
             <span class="cart-total-price">$0</span>
         </div>
         <button class="btn btn-primary btn-purchase" type="button">Send Order</button>
+        <div id="popup-overlay" class="popup-overlay hidden"></div>
+
+        <div id="popup" class="popup hidden">
+            <div class="popup-content">
+                <h3>📦Ju lutem plotesoni te dhënat e porosisë</h3>
+
+                <form id="order-form">
+                    <input type="text" name="name" placeholder="Emër Mbiemër" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Numër telefoni" required>
+                    <input type="text" name="address" placeholder="Adresa e plotë" required>
+
+                    <button type="submit" class="btn btn-primary confirm-order">Konfirmo porosinë</button>
+                </form>
+                 
+                <button id="close-popup" class="btn btn-danger close-btn">Mbylle</button>
+            </div>
+        </div>
+
+
 
 
     </section>

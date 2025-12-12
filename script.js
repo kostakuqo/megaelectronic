@@ -282,11 +282,13 @@ function ready() {
     const quantityInputs = document.getElementsByClassName('cart-quantity-input');
     for (let input of quantityInputs) input.addEventListener('change', quantityChanget);
 
-    const addToCartButtons = document.getElementsByClassName('buyphone-btn');
-    for (let button of addToCartButtons) button.addEventListener('click', addToCartClicked);
+    // ȘTERGE această parte:
+    // const addToCartButtons = document.getElementsByClassName('buyphone-btn');
+    // for (let button of addToCartButtons) button.addEventListener('click', addToCartClicked);
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked);
 }
+
 
 function purchaseClicked() {
     alert('Faleminderit per porosine tuaj!');
@@ -307,34 +309,60 @@ function quantityChanget(event) {
     updateCartTotal();
 }
 
-function addToCartClicked(input) {
+function addToCartClicked(inputOrEvent) {
     let product;
 
-    if (input instanceof Event) {
-        const button = input.target.closest('.buyphone-btn, .buyheadphone-btn,.buyspeaker-btn,.buycover-btn,.buycharger-btn,.buyscooter-btn');
+    // Dacă input-ul este un Event (click pe buton)
+    if (inputOrEvent instanceof Event) {
+        const button = inputOrEvent.target.closest(
+            '.buyphone-btn, .buyheadphone-btn, .buyspeaker-btn, .buycover-btn, .buycharger-btn, .buyscooter-btn'
+        );
         if (!button) return;
 
-        const shopItem = button.closest('.phonecard, .headphonecard,.speakercard,.covercard,.chargercard,.scootercard');
+        inputOrEvent.stopPropagation();
+        const shopItem = button.closest(
+            '.phonecard, .headphonecard, .speakercard, .covercard, .chargercard, .scootercard'
+        );
         if (!shopItem) return;
 
-        const title = shopItem.querySelector('.phonename, .headphonename,.speakername,.covername,.chargername,.scootername')?.innerText || "Titlu lipsă";
-        const price = shopItem.querySelector('.phoneprice, .headphoneprice,.speakerprice,.coverprice,.chargerprice,.scooterprice')?.innerText || "0";
-        const imageSrc = shopItem.querySelector('.phoneimage, .headphoneimage,speakerimage,.coverimage,.chargerimage,.scooterimage')?.src || "";
+        const title = shopItem.querySelector(
+            '.phonename, .headphonename, .speakername, .covername, .chargername, .scootername'
+        )?.innerText || "Titlu lipsă";
+
+        const price = shopItem.querySelector(
+            '.phoneprice, .headphoneprice, .speakerprice, .coverprice, .chargerprice, .scooterprice'
+        )?.innerText || "0";
+
+        const imageSrc = shopItem.querySelector(
+            '.phoneimage, .headphoneimage, .speakerimage, .coverimage, .chargerimage, .scooterimage'
+        )?.src || "";
 
         product = { title, price, imageSrc, quantity: 1 };
+
     } else {
-        product = { title: input.name || input.title, price: input.price, imageSrc: input.image || input.imageSrc, quantity: 1 };
+        product = {
+            title: inputOrEvent.name || inputOrEvent.title,
+            price: inputOrEvent.price,
+            imageSrc: inputOrEvent.images?.[0] || "",
+            quantity: 1
+        };
+
     }
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
     const existing = cart.find(p => p.title === product.title);
-    if (existing) existing.quantity += 1;
-    else cart.push(product);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push(product);
+    }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+
     alert(`${product.title} u shtua în coș!`);
 
-    addItemToCard(product.title, product.price, product.imageSrc);
+    addItemToCard(product.title, product.price, product.imageSrc, product.quantity);
     updateCartTotal();
 }
 
