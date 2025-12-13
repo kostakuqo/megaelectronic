@@ -1,0 +1,16 @@
+{
+  "name": "send-order-emails",
+  "version": "1.0.0",
+  "description": "Cloud Function to send order emails using SendGrid",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
