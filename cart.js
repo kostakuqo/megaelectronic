@@ -2,7 +2,10 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 window.onload = function () {
     renderCart();
-    document.querySelector('.btn-purchase').addEventListener('click', purchaseClicked);
+    const purchaseBtn = document.querySelector('.btn-purchase');
+    if (purchaseBtn) purchaseBtn.addEventListener('click', purchaseClicked);
+
+    attachFormListener();
 };
 
 function renderCart() {
@@ -27,11 +30,10 @@ function renderCart() {
                 <img class="cart-item-image" src="${product.imageSrc}" width="100" height="100">
                 <span class="cart-item-title">${product.title}</span>
             </div>
-               <span class="cart-options cart-column">
+            <span class="cart-options cart-column">
                 Color: ${product.color || 'N/A'}<br>
                 Memory: ${product.storage || 'N/A'}
-                </span>
-
+            </span>
             <span class="cart-price cart-column">${product.price}</span>
             <div class="cart-quantity cart-column">
                 <input class="cart-quantity-input" type="number" value="${product.quantity}" min="1">
@@ -66,7 +68,6 @@ function updateCartTotal() {
     cartRows.forEach(row => {
         const priceElement = row.querySelector('.cart-price');
         const quantityElement = row.querySelector('.cart-quantity-input');
-
         if (!priceElement || !quantityElement) return;
 
         const price = parseFloat(priceElement.innerText.replace("$", ""));
@@ -78,50 +79,56 @@ function updateCartTotal() {
     document.querySelector('.cart-total-price').innerText = '$' + total;
 }
 
-
 function purchaseClicked() {
     if (cart.length === 0) {
-        alert("Koshi juaj eshte bosh! Shto nje produkt per te vazhduar me porosine.");
+        alert("Koshi juaj eshte bosh!");
         return;
     }
-
     openPopup();
 }
 
+function attachFormListener() {
+    const form = document.getElementById('order-form');
+    if (!form || form.hasListenerAttached) return;
 
-document.getElementById('order-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    const form = e.target;
+        const order = {
+            customer: {
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                phone: form.phone.value.trim(),
+                address: form.address.value.trim(),
+            },
+            products: cart,
+            total: cart.reduce((sum, p) => sum + parseFloat(p.price) * p.quantity, 0)
+        };
 
-    const order = {
-        customer: {
-            name: form.name.value.trim(),
-            email: form.email.value.trim(),
-            phone: form.phone.value.trim(),
-            address: form.address.value.trim(),
-        },
-        products: cart,
-        total: cart.reduce((sum, p) => sum + parseFloat(p.price) * p.quantity, 0)
-    };
+        try {
+            await fetch('https://europe-west1-megaelectronic.cloudfunctions.net/sendOrderEmails', { // înlocuiește cu URL-ul funcției tale
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+            });
 
-    console.log("🟦 Porosia e derguar:", order);
+            alert("✅ Felicitări! Porosia a fost trimisă cu succes.");
 
-    alert("Faleminderit! Porosia u dërgua me sukses.");
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
 
-    cart = [];
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderCart();
+            form.reset();
+            hidePopup();
 
-    form.reset();
-    hidePopup();
-});
+        } catch (err) {
+            alert("❌ Eroare la trimiterea comenzii.");
+            console.error(err);
+        }
+    });
 
-
-
-
-
-
+    form.hasListenerAttached = true;
+}
 
 const popup = document.getElementById('popup');
 const overlay = document.getElementById('popup-overlay');
@@ -137,8 +144,5 @@ function hidePopup() {
     overlay.classList.remove('show');
 }
 
-// Închidere la apăsarea butonului X
 closePopup.addEventListener('click', hidePopup);
-
-// Închidere la click în afara popup-ului
 overlay.addEventListener('click', hidePopup);
