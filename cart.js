@@ -1,6 +1,4 @@
-
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCart();
@@ -11,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     attachFormListener();
     attachPopupListeners();
 });
-
 
 function renderCart() {
     const cartItemsContainer = document.querySelector('.cart-items');
@@ -40,10 +37,13 @@ function renderCart() {
 
             <span class="cart-options cart-column">
                 Color: ${product.color || 'N/A'}<br>
-                Memory: ${product.storage || 'N/A'}
+                Memory: ${product.storage ? product.storage.memory : 'N/A'}<br>
+                Price: $${product.storage ? product.storage.price : product.price}
             </span>
 
-            <span class="cart-price cart-column">${product.price}</span>
+            <span class="cart-price cart-column">
+                $${product.storage ? product.storage.price : product.price}
+            </span>
 
             <div class="cart-quantity cart-column">
                 <input class="cart-quantity-input" type="number" min="1" value="${product.quantity}">
@@ -76,9 +76,8 @@ function renderCart() {
     updateCartTotal();
 }
 
-
 function updateCartTotal() {
-    let total = cart.reduce((sum, p) => sum + parseFloat(p.price) * p.quantity, 0);
+    let total = cart.reduce((sum, p) => sum + (p.storage ? p.storage.price : parseFloat(p.price)) * p.quantity, 0);
     total = Math.round(total * 100) / 100;
     updateTotal(total);
 }
@@ -88,7 +87,6 @@ function updateTotal(value) {
     if (totalEl) totalEl.textContent = '$' + value;
 }
 
-
 function purchaseClicked() {
     if (cart.length === 0) {
         alert('Koshi juaj eshte bosh!');
@@ -96,7 +94,6 @@ function purchaseClicked() {
     }
     openPopup();
 }
-
 
 function attachFormListener() {
     const form = document.getElementById('order-form');
@@ -113,7 +110,7 @@ function attachFormListener() {
                 address: form.address.value.trim()
             },
             products: cart,
-            total: cart.reduce((sum, p) => sum + parseFloat(p.price) * p.quantity, 0)
+            total: cart.reduce((sum, p) => sum + (p.storage ? p.storage.price : parseFloat(p.price)) * p.quantity, 0)
         };
 
         try {
@@ -127,7 +124,6 @@ function attachFormListener() {
             form.reset();
             hidePopup();
 
-
             cart = [];
             saveCart();
             renderCart();
@@ -140,7 +136,6 @@ function attachFormListener() {
 
     form.dataset.listener = 'true';
 }
-
 
 function attachPopupListeners() {
     const closePopup = document.getElementById('close-popup');
@@ -162,7 +157,6 @@ function hidePopup() {
     popup?.classList.remove('show');
     overlay?.classList.remove('show');
 }
-
 
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));

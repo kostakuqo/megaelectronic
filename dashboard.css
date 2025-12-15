@@ -1,80 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f5f5f5;
-    }
+.orders-nav {
+    background-color: #00ff80;
+    padding-top: 10px;
+    padding-bottom: 9px;
 
-    h1 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
+}
 
-    #login-container,
-    #orders-container {
-      max-width: 900px;
-      margin: auto;
-    }
+.order-status {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+}
 
-    #orders-container {
-      display: none;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
-    }
+.badge {
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-    .order-card {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+.badge.new {
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
 
-    .order-card h3 {
-      margin: 0 0 10px 0;
-    }
+.badge.processed {
+    background: linear-gradient(135deg, #ff9800, #ef6c00);
+}
 
-    .order-card p {
-      margin: 4px 0;
-    }
+.badge.done {
+    background: linear-gradient(135deg, #2196f3, #0d47a1);
+}
 
-    .order-card ul {
-      margin: 5px 0 0 20px;
-    }
 
-    button.status-btn {
-      margin-top: 10px;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background: #28a745;
-      color: white;
-    }
 
-    button.status-btn:hover {
-      background: #218838;
-    }
+.orders-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #f4f6fb;
+    padding: 14px 12px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
-    input {
-      padding: 5px;
-      margin: 5px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
 
-    button.login-btn {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
+.orders-nav ul {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
-    button.login-btn:hover {
-      background: #0069d9;
-    }
 
-    #login-error {
-      color: red;
-    }
+.orders-nav ul li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+
+.orders-nav ul li a {
+    display: block;
+    padding: 12px 0;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.25s ease;
+    color: #fff;
+}
+
+.orders-nav ul li.all a {
+    background: linear-gradient(135deg, #9ea7b8, #6c7a92);
+}
+
+.orders-nav ul li.new a {
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+.orders-nav ul li.procces a {
+    background: linear-gradient(135deg, #ff9800, #ef6c00);
+}
+
+.orders-nav ul li.finished a {
+    background: linear-gradient(135deg, #2196f3, #0d47a1);
+}
+
+.orders-nav ul li.active a {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px) scale(1.05);
+    border: 2px solid #fff;
+}
+
+.orders-nav ul li a:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+
+#login-container,
+#orders-container {
+    max-width: 100%;
+    margin: auto;
+}
+
+#orders-container {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.order-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+
+}
+
+.order-card h3 {
+    margin: 0 0 10px 0;
+}
+
+.order-card p {
+    margin: 4px 0;
+}
+
+.order-card ul {
+    margin: 5px 0 0 20px;
+}
+
+button.status-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #28a745;
+    color: white;
+}
+
+button.status-btn:hover {
+    background: #218838;
+}
+
+input {
+    padding: 5px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button.login-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+button.login-btn:hover {
+    background: #0069d9;
+}
+
+#login-error {
+    color: red;
+}

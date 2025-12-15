@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!product) {
         document.querySelector('.product-detail').innerHTML =
-            "<p>Nu există produs selectat!</p>";
+            "<p>Nuk ekzistojne produkte te zgjedhura!!</p>";
         return;
     }
 
@@ -26,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = product.name || product.title;
 
     nameEls.forEach(el => el.innerText = title);
-    priceEl.innerText = product.price;
+    priceEl.innerText = product.price; // va fi actualizat după selectarea memoriei
     descEl.innerText = product.description;
 
     if (product.image) mainImage.src = product.image;
 
+    // --- Culori ---
     if (product.colors) {
         Object.entries(product.colors).forEach(([color, img], i) => {
             const btn = document.createElement('div');
@@ -62,21 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (product.storageOptions) {
-        product.storageOptions.forEach((storage, i) => {
+        storageBox.innerHTML = '';
+        product.storageOptions.forEach((storageOption, i) => {
             const btn = document.createElement('div');
             btn.className = "option-item";
-            btn.innerText = storage;
+            btn.innerText = storageOption.memory;
 
             if (i === 0) {
                 btn.classList.add("active");
-                selectedStorage = storage;
+                selectedStorage = storageOption;
+                priceEl.innerText = storageOption.price + ' ALL';
             }
 
             btn.addEventListener('click', () => {
                 document.querySelectorAll('#storage-options .option-item')
                     .forEach(el => el.classList.remove('active'));
                 btn.classList.add("active");
-                selectedStorage = storage;
+                selectedStorage = storageOption;
+
+                priceEl.innerText = storageOption.price + ' ALL';
             });
 
             storageBox.appendChild(btn);
@@ -87,8 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (product.state) {
-        const states = [product.state];
-
+        const states = Array.isArray(product.state) ? product.state : [product.state];
         states.forEach((state, i) => {
             const btn = document.createElement('div');
             btn.className = "option-item";
@@ -139,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (product.storageOptions && !selectedStorage) ||
             (product.state && !selectedState)
         ) {
-            alert("Te lutem zgjidh ");
+            alert("Te rugăm să alegi toate opțiunile!");
             return;
         }
 
@@ -160,17 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
 function addToCart(product, image, color, storage, state) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const title = product.name || product.title;
+    const price = storage ? storage.price : product.price;
+
     const existing = cart.find(p =>
         p.title === title &&
         p.color === color &&
-        p.storage === storage &&
+        p.storage?.memory === storage?.memory &&
         p.state === state
     );
 
     if (existing) existing.quantity++;
     else cart.push({
         title,
-        price: product.price,
+        price,
         imageSrc: image,
         color,
         storage,
@@ -179,5 +185,5 @@ function addToCart(product, image, color, storage, state) {
     });
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${title} u shtua ne koshin e blerjeve!`);
+    alert(`${title} a fost adăugat în coș!`);
 }
