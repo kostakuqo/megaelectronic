@@ -202,6 +202,7 @@ body {
 
 .carousel {
     position: relative;
+    width: 100%;
 }
 
 
@@ -209,7 +210,7 @@ body {
     width: 100%;
     height: 100%;
     display: none;
-    object-fit: cover;
+    object-fit: contain;
     transition: opacity 0.5s ease;
 }
 
@@ -265,6 +266,9 @@ button.next:hover {
 
 .main-mobile-icon {
     color: #004526;
+}
+.right-menu{
+    width: 100%;
 }
 
 .left-menu ul li a {

@@ -405,18 +405,35 @@ function updateCartTotal() {
     document.querySelector('.cart-total-price').innerText = '$' + total;
 }
 
+
+
+
 function generateContent(contains) {
     const container = document.querySelector(".about-contain");
     const templateContainer = document.querySelector(".main-container");
+
+    if (!container || !templateContainer) {
+        console.error("Nu s-au găsit elementele pentru generateContent");
+        return;
+    }
+
     templateContainer.style.display = "none";
 
     contains.forEach(contain => {
         const newContain = templateContainer.cloneNode(true);
 
-        newContain.querySelector(".preview-contain").innerHTML = contain.contain;
-        newContain.querySelector(".image-contain").src = contain.image;
-        newContain.querySelector(".icon-contain").innerHTML = `<i class="${contain.icon}"></i>`;
-        newContain.querySelector(".tooltip-text").textContent = contain.text;
+        const preview = newContain.querySelector(".preview-contain");
+        if (preview) preview.innerHTML = contain.contain;
+
+        const img = newContain.querySelector(".image-contain");
+        if (img) img.src = contain.image;
+
+        const icon = newContain.querySelector(".icon-contain");
+        if (icon) icon.innerHTML = `<i class="${contain.icon}"></i>`;
+
+        const tooltip = newContain.querySelector(".tooltip-text");
+        if (tooltip) tooltip.textContent = contain.text;
+
         newContain.style.display = "block";
 
         const redirectLink = newContain.querySelector('a.icon-contain-link');
@@ -425,12 +442,11 @@ function generateContent(contains) {
         container.appendChild(newContain);
 
         newContain.addEventListener('click', () => {
-            if (contain.type) {
-                window.location.href = `${contain.type}.html`;
-            }
+            if (contain.type) window.location.href = `${contain.type}.html`;
         });
     });
 }
+
 
 function initContainSwipe() {
     const container = document.querySelector('.about-contain');
