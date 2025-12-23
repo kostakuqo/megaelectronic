@@ -144,7 +144,7 @@ app.post('/update-order-status', async (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 
-if (require.main === module) { 
+if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`Server running locally on http://localhost:${PORT}`);
     });

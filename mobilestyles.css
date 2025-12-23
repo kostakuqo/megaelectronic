@@ -15,7 +15,7 @@
     }
 
     .main-container {
-        min-width: 80%;
+       width: 40%;
         flex-shrink: 0;
         scroll-snap-align: center;
         border-radius: 12px;
