@@ -64,6 +64,9 @@ node_modules/
 
 # dotenv environment variables file
 .env
-
+send-order-emails/serviceAccountKey.json
 # dataconnect generated files
 .dataconnect
+
+
+
