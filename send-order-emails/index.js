@@ -56,7 +56,7 @@ app.post('/', async (req, res) => {
 
         if (!customer?.email || !products?.length) {
             console.warn("Invalid order received:", req.body);
-            return res.status(400).send('Comandă invalidă');
+            return res.status(400).send('Porosi invalide!!');
         }
 
         console.log('Save order în Firestore...');
@@ -99,7 +99,7 @@ app.post('/', async (req, res) => {
             });
         } catch (err) {
             console.error('SendGrid ERROR unexpected:', err);
-            return res.status(500).send('Eroare la trimiterea emailurilor');
+            return res.status(500).send('Error ne dergimin  e porosise');
         }
 
         res.status(200).json({ success: true, orderId: orderRef.id });
