@@ -16,6 +16,14 @@ body {
         0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
+#product-price {
+    color: red;
+    border: 1px solid red;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 12px;
+}
+
 .all-description-product {
     display: flex;
     flex-direction: column;

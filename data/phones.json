@@ -17,9 +17,18 @@
             "i Ri"
         ],
         "storageOptions": [
-            "128GB",
-            "256GB",
-            "512GB"
+            {
+                "memory": "128GB",
+                "price": 1250
+            },
+            {
+                "memory": "256GB",
+                "price": 1350
+            },
+            {
+                "memory": "512GB",
+                "price": 1450
+            }
         ]
     },
     {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dashboard.css">
+  <title>Dashboard Vânzător</title>
+  <script type="module" src="dashboard.js" defer></script>
+
+</head>
+
+<body>
+
+  <div id="login-container">
+    <h1>Login Vânzător</h1>
+    <input type="email" id="email" placeholder="Email shites">
+    <input type="password" id="password" placeholder="Parola">
+    <button id="login-btn" class="login-btn">Login</button>
+    <p id="login-error"></p>
+  </div>
+
+  <div id="orders-container">
+
+    <div class="orders-nav">
+
+      <nav>
+        <ul>
+          <li class="all active" data-filter="all"><a href="#">Te gjitha</a></li>
+          <li class="new" data-filter="new"><a href="#">Porosite e reja</a></li>
+          <li class="procces" data-filter="processed"><a href="#">Porosi ne proces</a></li>
+          <li class="finished" data-filter="finished"><a href="#">Porosi te perfunduara</a></li>
+
+        </ul>
+      </nav>
+
+    </div>
+
+
+    <div id="orders-list">Po ngarkohen porosite...</div>
+  </div>
+
+  <script>
+  </script>
+
+</body>
+
+</html>
